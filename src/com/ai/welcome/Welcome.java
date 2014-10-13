@@ -4,6 +4,7 @@ package com.ai.welcome;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
@@ -22,6 +23,7 @@ public class Welcome extends ActionBarActivity {
 	// 关机标签
 	//private ImageButton btnShutdownTab = null;
 
+	public static String fileDir;
 
 	/**
 	 * 初始化页面
@@ -64,6 +66,8 @@ public class Welcome extends ActionBarActivity {
     
     
     public void downloadStorys(View view){
+    	fileDir = this.getFilesDir().toString();
+    	Log.e("hah", fileDir);
     	new Thread(runnable).start();
     }
     

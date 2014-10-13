@@ -72,7 +72,7 @@ public class DownloadService {
 	 * @return
 	 */
 	public static String getLocalFilePath(String filePath){
-		return "/storage/emulated/0/Music/" + filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length());
+		return Welcome.fileDir + "/" + "Œ“µƒ≤‚ ‘.mp3";
 	}
 	
 	

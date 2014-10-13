@@ -4,9 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.baidu.voicerecognition.android.VoiceRecognitionConfig;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
 import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
+
+import config.ApiClent;
+import config.ApiClent.ClientCallback;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -49,7 +57,7 @@ public class StoryHome extends ActionBarActivity{
         setContentView(R.layout.story_home);
         
         // 设置故事列表布局
-        this.initStoryListView();
+        //this.initStoryListView();
         
 
         // 初始化百度语音识别结果监听器
@@ -57,6 +65,9 @@ public class StoryHome extends ActionBarActivity{
         
         // 初始化播放按钮
         this.playOrPauseButton = (ImageButton) this.findViewById(R.id.btn_play_or_pause);
+        
+        // 从服务器获取故事资源
+        this.getStoryListFromServer();
     }
     
     
@@ -98,12 +109,12 @@ public class StoryHome extends ActionBarActivity{
     /**
      * 初始化故事列表
      */
-    private void initStoryListView(){
+    private void initStoryListView(List<StoryItem> storyList){
     	// 初始化故事列表布局
     	this.lvStoryList = (ListView) this.findViewById(R.id.lv_music_list);
     	
     	// 获取故事列表
-    	this.storyList = this.getStoryListFromDisk();
+    	this.storyList = storyList;
     	
     	// 设置全部故事列表
     	this.storyBook = this.storyList;
@@ -160,8 +171,6 @@ public class StoryHome extends ActionBarActivity{
     	this.setStoryOnclickEvent();
     	
     }
-    
-    
     
     
     
@@ -275,6 +284,7 @@ public class StoryHome extends ActionBarActivity{
      */
 	private Cursor searchWithPath() {
 		//String path = "/storage/emulated/0/Music";
+		//String path = this.getFilesDir().toString() + "/";
 		String path = "/";
 		//String path = "/data/data/com.ai.welcome/";
 	    String[] projection = new String[] { MediaStore.Audio.Media._ID,
@@ -359,6 +369,51 @@ public class StoryHome extends ActionBarActivity{
 
 		mDialog.show();		
 		
+	}
+	
+	
+	/**
+	 * 从服务器获取故事资源
+	 */
+	private void getStoryListFromServer()
+	{
+		// 发送登陆请求
+		ApiClent.getStoryList("", new ClientCallback() {
+						
+			// 登陆成功
+			public void  onSuccess(Object data) {
+				
+				String stringRes = data.toString();
+				List<StoryItem> storyList = new ArrayList<StoryItem>();
+				try {
+					JSONArray jsonArrayRes = new JSONArray(stringRes);
+			    	
+					for(int i =0; i < jsonArrayRes.length(); ++i){
+						StoryItem storyItem = new StoryItem();
+						
+						JSONObject obj = jsonArrayRes.getJSONObject(i);
+			    		storyItem.setTitle(obj.getString("name"));
+			    		String path = obj.getString("path");
+			    		storyItem.setLocation(path);
+			    		
+			    		storyList.add(storyItem);
+					}
+					
+					StoryHome.this.initStoryListView(storyList);
+				} catch (JSONException e) {
+				}
+
+				
+			}
+			
+			// 登录失败
+			public void onFailure(String message) {
+			}
+			
+			// 登陆报错
+			public void onError(Exception e) {
+			}
+		});
 	}
 		
 

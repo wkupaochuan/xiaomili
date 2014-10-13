@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * 故事条目
  * 1-- 用来代表一条故事
- * @author jixiaofeng
+ * @author Gain
  */
 
 public class StoryItem {
@@ -75,10 +75,10 @@ public class StoryItem {
 	 */
 	private boolean isLegalLocation(String location){
 		boolean result = true;
-		File testFile = new File(location);
-		if(!testFile.exists()){
-			result = false;
-		}
+//		File testFile = new File(location);
+//		if(!testFile.exists()){
+//			result = false;
+//		}
 		return result;
 	}
 	
