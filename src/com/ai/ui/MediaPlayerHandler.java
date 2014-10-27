@@ -1,4 +1,4 @@
-package com.ai.welcome;
+package com.ai.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,8 +246,6 @@ public class MediaPlayerHandler {
 	private void updateAliveSotoryId(int storyId){
 		this.aliveStoryId = storyId;
 	}
-	
-	
 	
 
 }

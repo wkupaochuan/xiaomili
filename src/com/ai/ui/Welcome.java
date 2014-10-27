@@ -1,5 +1,7 @@
-package com.ai.welcome;
+package com.ai.ui;
 
+
+import com.ai.welcome.R;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
