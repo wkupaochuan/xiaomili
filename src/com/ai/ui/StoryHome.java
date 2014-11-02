@@ -9,13 +9,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ai.constants.ConstantsCommon;
+import com.ai.sdk.ApiClent;
+import com.ai.sdk.ApiClent.ClientCallback;
 import com.ai.welcome.R;
 import com.baidu.voicerecognition.android.VoiceRecognitionConfig;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
 import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 
-import config.ApiClent;
-import config.ApiClent.ClientCallback;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -31,72 +32,72 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class StoryHome extends ActionBarActivity{
 	
-	// ¹ÊÊÂÁÐ±í²¼¾Ö
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±?ï¿½ï¿½
 	private ListView lvStoryList;
 	
-	// ¹ÊÊÂÁÐ±í
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 	private List<StoryItem> storyList = new ArrayList<StoryItem>();
 	
-	// È«²¿¹ÊÊÂ¼¯ºÏ(Ã¿´Î¶¼´ÓÕâÀïÃæ²éÑ¯£¬È»ºó¸³Öµ¸østoryList)
+	// È«ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½(Ã¿ï¿½Î¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½È»ï¿½ï¿½Öµï¿½ï¿½storyList)
 	private List<StoryItem> storyBook = new ArrayList<StoryItem>();
 	
-	// °Ù¶ÈÓïÒôÊ¶±ð¶Ô»°¿ò
+	// ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½Ô»ï¿½ï¿½ï¿½
     private BaiduASRDigitalDialog mDialog = null;
 
-    // °Ù¶ÈÓïÒôÊ¶±ð½á¹û¼àÌýÆ÷
+    // ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private DialogRecognitionListener mRecognitionListener;
     
-    // ²¥·Å¡¢ÔÝÍ£°´Å¥
+    // ï¿½ï¿½ï¿½Å¡ï¿½ï¿½ï¿½Í£ï¿½ï¿½Å¥
     private ImageButton playOrPauseButton;
     
 	
 	/**
-	 * ³õÊ¼»¯Ò³Ãæ
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½Ò³ï¿½ï¿½
 	 */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.story_home);
         
-        // ÉèÖÃ¹ÊÊÂÁÐ±í²¼¾Ö
+        // ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½Ð±?ï¿½ï¿½
         //this.initStoryListView();
         
 
-        // ³õÊ¼»¯°Ù¶ÈÓïÒôÊ¶±ð½á¹û¼àÌýÆ÷
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         this.initBiduVoiceRecgnitionListener();
         
-        // ³õÊ¼»¯²¥·Å°´Å¥
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½Å¥
         this.playOrPauseButton = (ImageButton) this.findViewById(R.id.btn_play_or_pause);
         
-        // ´Ó·þÎñÆ÷»ñÈ¡¹ÊÊÂ×ÊÔ´
+        // ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
         this.getStoryListFromServer();
     }
     
     
     /**
-     * ³õÊ¼»¯°Ù¶ÈÓïÒôÊ¶±ð½á¹û¼àÌýÆ÷
+     * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private void initBiduVoiceRecgnitionListener(){
     	
 		this.mRecognitionListener = new DialogRecognitionListener(){
 
 			public void onResults(Bundle results){
-			//ÔÚ Results ÖÐ»ñÈ¡ Key Îª DialogRecognitionListener .RESULTS_RECOGNITION µÄ StringArrayList
-			// ,¿ÉÄÜÎª¿Õ¡£»ñÈ¡µ½Ê¶±ð½á¹ûºóÖ´ÐÐÏàÓ¦µÄÒµÎñÂß¼­¼´¿É,´Ë»Øµ÷»áÔÚÖ÷Ïß³Ìµ÷ÓÃ¡£ 
+			//ï¿½ï¿½ Results ï¿½Ð»ï¿½È¡ Key Îª DialogRecognitionListener .RESULTS_RECOGNITION ï¿½ï¿½ StringArrayList
+			// ,ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ¡ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Òµï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ë»Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß³Ìµï¿½ï¿½Ã¡ï¿½ 
 				ArrayList<String> rs = (results !=null)? results.getStringArrayList(RESULTS_RECOGNITION):null;
 				
 				if(rs != null && rs.size() > 0){
 					//mDialog.dismiss();
-					//´Ë´¦´¦ÀíÊ¶±ð½á¹û,Ê¶±ð½á¹û¿ÉÄÜÓÐ¶à¸ö,°´ÖÃÐÅ¶È´Ó¸ßµ½µÍÅÅÁÐ,µÚÒ»¸öÔªËØÊÇÖÃÐÅ¶È×î¸ßµÄ½á¹û¡£
+					//ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½,Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Å¶È´Ó¸ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ï¿½ßµÄ½ï¿½ï¿½
 					for(String str:rs){
-						Log.e("hah", "ÄãËµµÄÊÇ:" + str.toString());
+						Log.e("hah", "ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½:" + str.toString());
 					}
 					
-					// Ê¶±ðÍê±Ï£¬¼ÌÐø²¥·Å
+					// Ê¶ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					if(MediaPlayerHandler.getInstance().isPaused()){
 						playOrPauseOnclick(null);
 					}
 					
-					// ¸ù¾ÝÊ¶±ð½á¹û¸üÐÂ¹ÊÊÂÁÐ±í
+					// ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 					updateStoryListByInputStoryTitle(rs.get(0));
 					
 				}
@@ -108,26 +109,26 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ³õÊ¼»¯¹ÊÊÂÁÐ±í
+     * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
      */
     private void initStoryListView(List<StoryItem> storyList){
-    	// ³õÊ¼»¯¹ÊÊÂÁÐ±í²¼¾Ö
+    	// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±?ï¿½ï¿½
     	this.lvStoryList = (ListView) this.findViewById(R.id.lv_music_list);
     	
-    	// »ñÈ¡¹ÊÊÂÁÐ±í
+    	// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
     	this.storyList = storyList;
     	
-    	// ÉèÖÃÈ«²¿¹ÊÊÂÁÐ±í
+    	// ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
     	this.storyBook = this.storyList;
     	
-    	// ÉèÖÃ¹ÊÊÂÁÐ±íÒ³ÃæÄÚÈÝ
+    	// ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     	this.updateStoryList(this.storyList);
     	
     }
     
     
     /**
-     * ²¥·Å¹ÊÊÂ
+     * ï¿½ï¿½ï¿½Å¹ï¿½ï¿½ï¿½
      * @param storyId
      */
     private void playStory(int storyId){
@@ -138,14 +139,14 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ¸üÐÂ¹ÊÊÂÁÐ±í
+     * ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
      * @param newStoryList
      */
     private void updateStoryList(List<StoryItem> newStoryList){
-    	// ¸üÐÂ²¥·ÅÒ³ÃæµÄ¹ÊÊÂÁÐ±í
+    	// ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½Ò³ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
     	this.storyList = newStoryList;
     	
-    	// Í¬²½¸üÐÂ²¥·ÅÆ÷µÄ¹ÊÊÂÁÐ±í
+    	// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
     	MediaPlayerHandler.getInstance().updateStoryList(this.storyList);
     	
     	List<Map<String, String>> listMap = new ArrayList<Map<String, String>>();
@@ -157,7 +158,7 @@ public class StoryHome extends ActionBarActivity{
     	}
     
     	
-    	// ÉèÖÃ¹ÊÊÂÁÐ±íÒ³ÃæÄÚÈÝ
+    	// ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     	this.lvStoryList.setAdapter(
     			new SimpleAdapter(
     					StoryHome.this
@@ -168,7 +169,7 @@ public class StoryHome extends ActionBarActivity{
     					)
     			);
     	
-    	// ÉèÖÃ¹ÊÊÂÌõÄ¿µã»÷ÊÂ¼þ
+    	// ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
     	this.setStoryOnclickEvent();
     	
     }
@@ -176,7 +177,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ¼àÌý¡°ÏÂÒ»¸ö¡±°´Å¥µã»÷ÊÂ¼þ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
      * @param view
      */
     public void playNextOnclick(View view){
@@ -186,7 +187,7 @@ public class StoryHome extends ActionBarActivity{
 
     
     /**
-     * ¼àÌý¡°ÉÏÒ»¸ö¡±°´Å¥µã»÷ÊÂ¼þ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
      * @param view
      */
     public void playForwardStoryOnClick(View view){
@@ -196,7 +197,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ¼àÌýÔÝÍ£¡¢²¥·Å¼ü
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½Å¼ï¿½
      * @param view
      */
     public void playOrPauseOnclick(View view){
@@ -217,7 +218,7 @@ public class StoryHome extends ActionBarActivity{
     }
     
     /**
-     * ¸üÐÂ²¥·Å×´Ì¬
+     * ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½×´Ì¬
      */
     private void updatePlayStatus(int playingStatus)
     {
@@ -233,7 +234,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ÉèÖÃ¹ÊÊÂµã»÷ÊÂ¼þ
+     * ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½Âµï¿½ï¿½ï¿½Â¼ï¿½
      */
     private void setStoryOnclickEvent(){
     	
@@ -248,29 +249,29 @@ public class StoryHome extends ActionBarActivity{
     }
     
     /**
-     * »ñÈ¡¹ÊÊÂÁÐ±í
+     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
      * @return
      */
     private List<StoryItem> getStoryListFromDisk(){
     	List<StoryItem> storyList = new ArrayList<StoryItem>();
     	Cursor storyCursors = this.searchWithPath();
-    	Log.e("hah", "×Ü¹²ÓÐ¹ÊÊÂ:" + storyCursors.getCount());
+    	Log.e("hah", "ï¿½Ü¹ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½:" + storyCursors.getCount());
     	storyCursors.moveToFirst();
     	
     	for(int i  = 0; i < storyCursors.getCount(); ++i){
     		StoryItem storyItem = new StoryItem();
-    		// ÉèÖÃ¹ÊÊÂ±êÌâ
+    		// ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½Â±ï¿½ï¿½ï¿½
     		String storyTitle = storyCursors.getString(storyCursors.getColumnIndex(MediaStore.Audio.Media.TITLE));
-    		// ÉèÖÃ¹ÊÊÂ´æ´¢µØÖ·
+    		// ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½Â´æ´¢ï¿½ï¿½Ö·
     		String storyLocation = storyCursors.getString(storyCursors.getColumnIndex(MediaStore.Audio.Media.DATA));
     		
     		storyItem.setTitle(storyTitle);
     		storyItem.setLocation(storyLocation);
     		
-    		// ÒÆ¶¯µ½ÏÂÒ»Ìõ
+    		// ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     		storyCursors.moveToNext();
     		
-    		// Ìí¼Óµ½¹ÊÊÂÁÐ±í
+    		// ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
     		storyList.add(storyItem);
     	}
     	
@@ -280,7 +281,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ¶ÁÈ¡ÊÖ»úmusicÄ¿Â¼ÏÂµÄÒôÀÖÎÄ¼þ
+     * ï¿½ï¿½È¡ï¿½Ö»ï¿½musicÄ¿Â¼ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
      * @param path
      */
 	private Cursor searchWithPath() {
@@ -313,16 +314,13 @@ public class StoryHome extends ActionBarActivity{
 	
 	
 	/**
-	 * ¸ù¾ÝÊäÈëµÄ¹ÊÊÂÃû³Æ¸üÐÂ¹ÊÊÂÁÐ±í
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½Æ¸ï¿½ï¿½Â¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 	 * @param needleStoryTitle
 	 */
 	private void updateStoryListByInputStoryTitle(String needleStoryTitle){
 		
 		List<StoryItem> hintStoryList = StoryListHandler.getMostSimilarStorys(this.storyBook, needleStoryTitle);
 		
-		for(StoryItem m:hintStoryList){
-			Log.e("hah", m.getTitle());
-		}
 		
 		this.updateStoryList(hintStoryList);
 	}
@@ -330,12 +328,12 @@ public class StoryHome extends ActionBarActivity{
 	
 	
 	/**
-	 * µ÷ÓÃ°Ù¶ÈÓïÒô¶Ô»°¿ò
+	 * ï¿½ï¿½ï¿½Ã°Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½
 	 * @param view
 	 */
 	public void invokeBaiduVoice(View view){
 		
-		// Èç¹ûÕýÔÚ²¥·Å¹ÊÊÂ, Ê×ÏÈÍ£Ö¹µ±Ç°µÄ²¥·Å£¬ÒÔÃâÓ°ÏìÓïÒôÊ¶±ðµÄ½á¹û
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½Å¹ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½ï¿½Ç°ï¿½Ä²ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½Ä½ï¿½ï¿½
 		if(MediaPlayerHandler.getInstance().isPlaying()){
 			this.playOrPauseOnclick(null);
 		}
@@ -346,23 +344,23 @@ public class StoryHome extends ActionBarActivity{
 		
 		Bundle params= new Bundle();
 		
-		//ÉèÖÃ¿ª·Å API Key 
+		//ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ API Key 
 		params.putString(BaiduASRDigitalDialog.PARAM_API_KEY, "7Ad10dy9IB1qpNPS1mwSh4Is"); 
 		
-		//ÉèÖÃ¿ª·ÅÆ½Ì¨ Secret Key 
+		//ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½Æ½Ì¨ Secret Key 
 		params.putString(BaiduASRDigitalDialog.PARAM_SECRET_KEY, "NziRvQkD1SqA8TjYSyhxfrVnhUWbH9Lo"); 
 		
-		//ÉèÖÃÊ¶±ðÁìÓò:ËÑË÷¡¢ÊäÈë¡¢µØÍ¼¡¢ÒôÀÖ......,¿ÉÑ¡¡£Ä¬ÈÏÎªÊäÈë¡£
+		//ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡¢ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½......,ï¿½ï¿½Ñ¡ï¿½ï¿½Ä¬ï¿½ï¿½Îªï¿½ï¿½ï¿½ë¡£
 //		params.putInt( BaiduASRDigitalDialog.PARAM_PROP, VoiceRecognitionConfig.PROP_INPUT);
 		
-		//ÉèÖÃÓïÖÖÀàÐÍ:ÖÐÎÄÆÕÍ¨»°,ÖÐÎÄÔÁÓï,Ó¢ÎÄ,¿ÉÑ¡¡£Ä¬ÈÏÎªÖÐÎÄÆÕÍ¨»°
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Ó¢ï¿½ï¿½,ï¿½ï¿½Ñ¡ï¿½ï¿½Ä¬ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
 		params.putString( BaiduASRDigitalDialog.PARAM_LANGUAGE, VoiceRecognitionConfig.LANGUAGE_CHINESE);
 		
-		//Èç¹ûÐèÒªÓïÒå½âÎö,ÉèÖÃÏÂ·½²ÎÊý¡£ÁìÓòÎªÊäÈë²»Ö§³Ö 
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ë²»Ö§ï¿½ï¿½ 
 //		params.putBoolean(BaiduASRDigitalDialog.PARAM_NLU_ENABLE, true);
 		
-		// ÉèÖÃ¶Ô»°¿òÖ÷Ìâ,¿ÉÑ¡¡£BaiduASRDigitalDialog Ìá¹©ÁËÀ¶¡¢°µ¡¢ºì¡¢ÂÌ¡¢³ÈËÄÖÐÑÕÉ«,Ã¿ÖÖÑÕ É«ÓÖ·ÖÁÁ¡¢°µÁ½ÖÖÉ«µ÷¡£
-		// ¹² 8 ÖÖÖ÷Ìâ,¿ª·¢Õß¿ÉÒÔ°´ÐèÑ¡Ôñ,È¡Öµ²Î¿¼ BaiduASRDigitalDialog ÖÐ Ç°×ºÎª THEME_µÄ³£Á¿¡£Ä¬ÈÏÎªÁÁÀ¶É« 
+		// ï¿½ï¿½ï¿½Ã¶Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ñ¡ï¿½ï¿½BaiduASRDigitalDialog ï¿½á¹©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì¡¢ï¿½Ì¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«,Ã¿ï¿½ï¿½ï¿½ï¿½ É«ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ 8 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ï¿½Ô°ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½,È¡Öµï¿½Î¿ï¿½ BaiduASRDigitalDialog ï¿½ï¿½ Ç°×ºÎª THEME_ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½É« 
 		params.putInt(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_RED_DEEPBG);
 		
 		mDialog = new BaiduASRDigitalDialog(this,params);
@@ -374,14 +372,14 @@ public class StoryHome extends ActionBarActivity{
 	
 	
 	/**
-	 * ´Ó·þÎñÆ÷»ñÈ¡¹ÊÊÂ×ÊÔ´
+	 * ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
 	 */
 	private void getStoryListFromServer()
 	{
-		// ·¢ËÍµÇÂ½ÇëÇó
+		// ï¿½ï¿½ï¿½Íµï¿½Â½ï¿½ï¿½ï¿½ï¿½
 		ApiClent.getStoryList("", new ClientCallback() {
 						
-			// µÇÂ½³É¹¦
+			// ï¿½É¹ï¿½
 			public void  onSuccess(Object data) {
 				
 				String stringRes = data.toString();
@@ -407,12 +405,14 @@ public class StoryHome extends ActionBarActivity{
 				
 			}
 			
-			// µÇÂ¼Ê§°Ü
+			// Ê§ï¿½ï¿½
 			public void onFailure(String message) {
+				Log.e(ConstantsCommon.LOG_TAG, message);
 			}
 			
-			// µÇÂ½±¨´í
+			// ï¿½ï¿½ï¿½ï¿½
 			public void onError(Exception e) {
+				Log.e(ConstantsCommon.LOG_TAG, e.getMessage());
 			}
 		});
 	}

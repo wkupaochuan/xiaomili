@@ -1,8 +1,10 @@
-package config;
+package com.ai.sdk;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.ai.constants.ApiURL;
+import com.ai.constants.ConstantsCommon;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -17,7 +19,7 @@ public class QYRestClient {
 	  }
 
 	  /**
-	   * 发送get请求
+	   * ??????get请�??
 	   * @param url
 	   * @param params
 	   * @param responseHandler
@@ -32,13 +34,13 @@ public class QYRestClient {
 
 
 	  /**
-	   * 发送post请求
+	   * ??????post请�??
 	   * @param url
 	   * @param params
 	   * @param responseHandler
 	   */
 	  public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-		  Log.e("hah", getAbsoluteUrl(url));
+		  Log.e(ConstantsCommon.LOG_TAG, getAbsoluteUrl(url));
 	      client.post(getAbsoluteUrl(url), params, responseHandler);
 	  }
 	  
@@ -47,13 +49,13 @@ public class QYRestClient {
 	  }
 
 	  /**
-	   * 获取完整路径
+	   * ??��??�???�路�?
 	   * @param relativeUrl
 	   * @return
 	   */
 	  private static String getAbsoluteUrl(String relativeUrl) {
 		  client.setTimeout(10*1000);
 		  client.setMaxConnections(5);
-	      return "http://toy.wkupaochuan.com/" + relativeUrl;
+	      return ApiURL.API_HOME + relativeUrl;
 	  }
 }
