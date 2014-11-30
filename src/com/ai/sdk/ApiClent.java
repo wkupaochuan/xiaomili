@@ -5,9 +5,10 @@ import org.apache.http.Header;
 
 
 
-import com.ai.constants.ApiURL;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import constants.ApiURL;
 
 
 public class ApiClent {

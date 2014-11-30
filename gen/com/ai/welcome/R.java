@@ -1084,12 +1084,13 @@ containing a value of this type.
         public static final int button_previous=0x7f02005b;
         public static final int forward_selecor=0x7f02005c;
         public static final int ic_launcher=0x7f02005d;
-        public static final int listbg=0x7f02005e;
-        public static final int microphone=0x7f02005f;
-        public static final int next_selecor=0x7f020060;
-        public static final int pause_selecor=0x7f020061;
-        public static final int play_selecor=0x7f020062;
-        public static final int tab_story_home=0x7f020063;
+        public static final int learn_tab=0x7f02005e;
+        public static final int listbg=0x7f02005f;
+        public static final int microphone=0x7f020060;
+        public static final int next_selecor=0x7f020061;
+        public static final int pause_selecor=0x7f020062;
+        public static final int play_selecor=0x7f020063;
+        public static final int story_tab=0x7f020064;
     }
     public static final class id {
         public static final int action_bar=0x7f06001c;
@@ -1103,16 +1104,16 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_settings=0x7f060048;
+        public static final int action_settings=0x7f060049;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
-        public static final int btn_baidu_voice=0x7f060046;
-        public static final int btn_foward_story=0x7f060042;
+        public static final int btn_baidu_voice=0x7f060047;
+        public static final int btn_foward_story=0x7f060043;
         public static final int btn_im_tab=0x7f06003e;
         public static final int btn_knowledge_tab=0x7f06003d;
-        public static final int btn_next_story=0x7f060044;
-        public static final int btn_play_or_pause=0x7f060043;
+        public static final int btn_next_story=0x7f060045;
+        public static final int btn_play_or_pause=0x7f060044;
         public static final int btn_showdown_tab=0x7f06003f;
         public static final int btn_story_tab=0x7f06003c;
         public static final int checkbox=0x7f06002d;
@@ -1132,8 +1133,8 @@ containing a value of this type.
         public static final int image=0x7f060027;
         public static final int listMode=0x7f060001;
         public static final int list_item=0x7f060029;
-        public static final int lv_music_list=0x7f060040;
-        public static final int ly_story_buttons=0x7f060041;
+        public static final int lv_music_list=0x7f060041;
+        public static final int ly_story_buttons=0x7f060042;
         public static final int middle=0x7f060012;
         public static final int never=0x7f060009;
         public static final int none=0x7f060010;
@@ -1156,10 +1157,11 @@ containing a value of this type.
         public static final int showHome=0x7f060004;
         public static final int showTitle=0x7f060006;
         public static final int split_action_bar=0x7f06001e;
-        public static final int story_item_title=0x7f060047;
+        public static final int story_item_title=0x7f060048;
         public static final int submit_area=0x7f060039;
         public static final int tabMode=0x7f060002;
-        public static final int test=0x7f060045;
+        public static final int test=0x7f060046;
+        public static final int text_line=0x7f060040;
         public static final int title=0x7f06002b;
         public static final int top_action_bar=0x7f060020;
         public static final int up=0x7f060021;
@@ -1217,9 +1219,10 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_welcome=0x7f030018;
-        public static final int story_home=0x7f030019;
-        public static final int story_item=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        public static final int learn_home=0x7f030019;
+        public static final int story_home=0x7f03001a;
+        public static final int story_item=0x7f03001b;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
     }
     public static final class menu {
         public static final int welcome=0x7f0d0000;

@@ -1,4 +1,4 @@
-package com.ai.constants;
+package constants;
 
 public class ApiURL {
 	

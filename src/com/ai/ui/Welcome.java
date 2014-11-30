@@ -1,20 +1,15 @@
 package com.ai.ui;
 
 
-import com.ai.welcome.R;
+import base_ui.BaseActivity;
 
-import android.support.v7.app.ActionBarActivity;
+import com.ai.welcome.R;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 
-public class Welcome extends ActionBarActivity {
-	
-
-
-	public static String fileDir;
+public class Welcome extends BaseActivity {
 
 	/**
 	 * 初始化页面
@@ -37,22 +32,16 @@ public class Welcome extends ActionBarActivity {
     }
     
     
-    public void downloadStorys(View view){
-    	fileDir = this.getFilesDir().toString();
-    	Log.e("hah", fileDir);
-    	new Thread(runnable).start();
+    /**
+     * 点击听课程按钮
+     * @param view
+     */
+    public void learnTabOnClick (View view){
+    	
+    	// 跳转到学习课程页面
+		Intent intent = new Intent(this, LearnHome.class);
+		startActivity(intent);
     }
-    
-    
-    Runnable runnable = new Runnable(){
-        @Override
-        public void run() {
-        	DownloadService.downlaod();
-        }
-    };
-    
-    
-    
     
     
 }

@@ -5,11 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.StoryItem;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ai.constants.ConstantsCommon;
+import service.MediaPlayerHandler;
+import service.StoryListHandler;
+
+import base_ui.BaseActivity;
+import constants.ConstantsCommon;
 import com.ai.sdk.ApiClent;
 import com.ai.sdk.ApiClent.ClientCallback;
 import com.ai.welcome.R;
@@ -21,7 +27,6 @@ import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,74 +35,74 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class StoryHome extends ActionBarActivity{
+public class StoryHome extends BaseActivity{
 	
-	// �����б?��
+	// 锟斤拷锟斤拷锟叫�?锟斤拷
 	private ListView lvStoryList;
 	
-	// �����б�
+	// 锟斤拷锟斤拷锟叫憋拷
 	private List<StoryItem> storyList = new ArrayList<StoryItem>();
 	
-	// ȫ�����¼���(ÿ�ζ����������ѯ��Ȼ��ֵ��storyList)
+	// 全锟斤拷锟斤拷锟铰硷拷锟斤拷(每锟轿讹拷锟斤拷锟斤拷锟斤拷锟斤拷锟窖拷锟饺伙拷锟街碉拷锟絪toryList)
 	private List<StoryItem> storyBook = new ArrayList<StoryItem>();
 	
-	// �ٶ�����ʶ��Ի���
+	// 锟劫讹拷锟斤拷锟斤拷识锟斤拷曰锟斤拷锟�
     private BaiduASRDigitalDialog mDialog = null;
 
-    // �ٶ�����ʶ���������
+    // 锟劫讹拷锟斤拷锟斤拷识锟斤拷锟斤拷锟斤拷锟斤拷锟�
     private DialogRecognitionListener mRecognitionListener;
     
-    // ���š���ͣ��ť
+    // 锟斤拷锟脚★拷锟斤拷停锟斤拷钮
     private ImageButton playOrPauseButton;
     
 	
 	/**
-	 * ��ʼ��ҳ��
+	 * 锟斤拷始锟斤拷页锟斤拷
 	 */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.story_home);
         
-        // ���ù����б?��
+        // 锟斤拷锟矫癸拷锟斤拷锟叫�?锟斤拷
         //this.initStoryListView();
         
 
-        // ��ʼ���ٶ�����ʶ���������
+        // 锟斤拷始锟斤拷锟劫讹拷锟斤拷锟斤拷识锟斤拷锟斤拷锟斤拷锟斤拷锟�
         this.initBiduVoiceRecgnitionListener();
         
-        // ��ʼ�����Ű�ť
+        // 锟斤拷始锟斤拷锟斤拷锟脚帮拷钮
         this.playOrPauseButton = (ImageButton) this.findViewById(R.id.btn_play_or_pause);
         
-        // �ӷ�������ȡ������Դ
+        // 锟接凤拷锟斤拷锟斤拷锟斤拷取锟斤拷锟斤拷锟斤拷源
         this.getStoryListFromServer();
     }
     
     
     /**
-     * ��ʼ���ٶ�����ʶ���������
+     * 锟斤拷始锟斤拷锟劫讹拷锟斤拷锟斤拷识锟斤拷锟斤拷锟斤拷锟斤拷锟�
      */
     private void initBiduVoiceRecgnitionListener(){
     	
 		this.mRecognitionListener = new DialogRecognitionListener(){
 
 			public void onResults(Bundle results){
-			//�� Results �л�ȡ Key Ϊ DialogRecognitionListener .RESULTS_RECOGNITION �� StringArrayList
-			// ,����Ϊ�ա���ȡ��ʶ�����ִ����Ӧ��ҵ���߼�����,�˻ص��������̵߳��á� 
+			//锟斤拷 Results 锟叫伙拷取 Key 为 DialogRecognitionListener .RESULTS_RECOGNITION 锟斤拷 StringArrayList
+			// ,锟斤拷锟斤拷为锟秸★拷锟斤拷取锟斤拷识锟斤拷锟斤拷锟街达拷锟斤拷锟接︼拷锟揭碉拷锟斤拷呒锟斤拷锟斤拷锟�,锟剿回碉拷锟斤拷锟斤拷锟斤拷锟竭程碉拷锟矫★拷 
 				ArrayList<String> rs = (results !=null)? results.getStringArrayList(RESULTS_RECOGNITION):null;
 				
 				if(rs != null && rs.size() > 0){
 					//mDialog.dismiss();
-					//�˴�����ʶ����,ʶ��������ж��,�����ŶȴӸߵ�������,��һ��Ԫ�������Ŷ���ߵĽ��
+					//锟剿达拷锟斤拷锟斤拷识锟斤拷锟斤拷,识锟斤拷锟斤拷锟斤拷锟斤拷卸锟斤拷,锟斤拷锟斤拷锟脚度从高碉拷锟斤拷锟斤拷锟斤拷,锟斤拷一锟斤拷元锟斤拷锟斤拷锟斤拷锟脚讹拷锟斤拷叩慕锟斤拷
 					for(String str:rs){
-						Log.e("hah", "��˵����:" + str.toString());
+						Log.e("hah", "锟斤拷说锟斤拷锟斤拷:" + str.toString());
 					}
 					
-					// ʶ����ϣ������
+					// 识锟斤拷锟斤拷希锟斤拷锟斤拷锟斤拷
 					if(MediaPlayerHandler.getInstance().isPaused()){
 						playOrPauseOnclick(null);
 					}
 					
-					// ���ʶ������¹����б�
+					// 锟斤拷锟绞讹拷锟斤拷锟斤拷锟铰癸拷锟斤拷锟叫憋拷
 					updateStoryListByInputStoryTitle(rs.get(0));
 					
 				}
@@ -109,26 +114,26 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ��ʼ�������б�
+     * 锟斤拷始锟斤拷锟斤拷锟斤拷锟叫憋拷
      */
     private void initStoryListView(List<StoryItem> storyList){
-    	// ��ʼ�������б?��
+    	// 锟斤拷始锟斤拷锟斤拷锟斤拷锟叫�?锟斤拷
     	this.lvStoryList = (ListView) this.findViewById(R.id.lv_music_list);
     	
-    	// ��ȡ�����б�
+    	// 锟斤拷取锟斤拷锟斤拷锟叫憋拷
     	this.storyList = storyList;
     	
-    	// ����ȫ�������б�
+    	// 锟斤拷锟斤拷全锟斤拷锟斤拷锟斤拷锟叫憋拷
     	this.storyBook = this.storyList;
     	
-    	// ���ù����б�ҳ������
+    	// 锟斤拷锟矫癸拷锟斤拷锟叫憋拷页锟斤拷锟斤拷锟斤拷
     	this.updateStoryList(this.storyList);
     	
     }
     
     
     /**
-     * ���Ź���
+     * 锟斤拷锟脚癸拷锟斤拷
      * @param storyId
      */
     private void playStory(int storyId){
@@ -139,14 +144,14 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ���¹����б�
+     * 锟斤拷锟铰癸拷锟斤拷锟叫憋拷
      * @param newStoryList
      */
     private void updateStoryList(List<StoryItem> newStoryList){
-    	// ���²���ҳ��Ĺ����б�
+    	// 锟斤拷锟铰诧拷锟斤拷页锟斤拷墓锟斤拷锟斤拷斜锟�
     	this.storyList = newStoryList;
     	
-    	// ͬ�����²������Ĺ����б�
+    	// 同锟斤拷锟斤拷锟铰诧拷锟斤拷锟斤拷锟侥癸拷锟斤拷锟叫憋拷
     	MediaPlayerHandler.getInstance().updateStoryList(this.storyList);
     	
     	List<Map<String, String>> listMap = new ArrayList<Map<String, String>>();
@@ -158,7 +163,7 @@ public class StoryHome extends ActionBarActivity{
     	}
     
     	
-    	// ���ù����б�ҳ������
+    	// 锟斤拷锟矫癸拷锟斤拷锟叫憋拷页锟斤拷锟斤拷锟斤拷
     	this.lvStoryList.setAdapter(
     			new SimpleAdapter(
     					StoryHome.this
@@ -169,7 +174,7 @@ public class StoryHome extends ActionBarActivity{
     					)
     			);
     	
-    	// ���ù�����Ŀ����¼�
+    	// 锟斤拷锟矫癸拷锟斤拷锟斤拷目锟斤拷锟斤拷录锟�
     	this.setStoryOnclickEvent();
     	
     }
@@ -177,7 +182,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ������һ������ť����¼�
+     * 锟斤拷锟斤拷锟斤拷一锟斤拷锟斤拷锟斤拷钮锟斤拷锟斤拷录锟�
      * @param view
      */
     public void playNextOnclick(View view){
@@ -187,7 +192,7 @@ public class StoryHome extends ActionBarActivity{
 
     
     /**
-     * ������һ������ť����¼�
+     * 锟斤拷锟斤拷锟斤拷一锟斤拷锟斤拷锟斤拷钮锟斤拷锟斤拷录锟�
      * @param view
      */
     public void playForwardStoryOnClick(View view){
@@ -197,7 +202,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ������ͣ�����ż�
+     * 锟斤拷锟斤拷锟斤拷停锟斤拷锟斤拷锟脚硷拷
      * @param view
      */
     public void playOrPauseOnclick(View view){
@@ -218,7 +223,7 @@ public class StoryHome extends ActionBarActivity{
     }
     
     /**
-     * ���²���״̬
+     * 锟斤拷锟铰诧拷锟斤拷状态
      */
     private void updatePlayStatus(int playingStatus)
     {
@@ -234,7 +239,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ���ù��µ���¼�
+     * 锟斤拷锟矫癸拷锟铰碉拷锟斤拷录锟�
      */
     private void setStoryOnclickEvent(){
     	
@@ -249,29 +254,29 @@ public class StoryHome extends ActionBarActivity{
     }
     
     /**
-     * ��ȡ�����б�
+     * 锟斤拷取锟斤拷锟斤拷锟叫憋拷
      * @return
      */
     private List<StoryItem> getStoryListFromDisk(){
     	List<StoryItem> storyList = new ArrayList<StoryItem>();
     	Cursor storyCursors = this.searchWithPath();
-    	Log.e("hah", "�ܹ��й���:" + storyCursors.getCount());
+    	Log.e("hah", "锟杰癸拷锟叫癸拷锟斤拷:" + storyCursors.getCount());
     	storyCursors.moveToFirst();
     	
     	for(int i  = 0; i < storyCursors.getCount(); ++i){
     		StoryItem storyItem = new StoryItem();
-    		// ���ù��±���
+    		// 锟斤拷锟矫癸拷锟铰憋拷锟斤拷
     		String storyTitle = storyCursors.getString(storyCursors.getColumnIndex(MediaStore.Audio.Media.TITLE));
-    		// ���ù��´洢��ַ
+    		// 锟斤拷锟矫癸拷锟铰存储锟斤拷址
     		String storyLocation = storyCursors.getString(storyCursors.getColumnIndex(MediaStore.Audio.Media.DATA));
     		
     		storyItem.setTitle(storyTitle);
     		storyItem.setLocation(storyLocation);
     		
-    		// �ƶ�����һ��
+    		// 锟狡讹拷锟斤拷锟斤拷一锟斤拷
     		storyCursors.moveToNext();
     		
-    		// ��ӵ������б�
+    		// 锟斤拷拥锟斤拷锟斤拷锟斤拷斜锟�
     		storyList.add(storyItem);
     	}
     	
@@ -281,7 +286,7 @@ public class StoryHome extends ActionBarActivity{
     
     
     /**
-     * ��ȡ�ֻ�musicĿ¼�µ������ļ�
+     * 锟斤拷取锟街伙拷music目录锟铰碉拷锟斤拷锟斤拷锟侥硷拷
      * @param path
      */
 	private Cursor searchWithPath() {
@@ -314,7 +319,7 @@ public class StoryHome extends ActionBarActivity{
 	
 	
 	/**
-	 * �������Ĺ�����Ƹ��¹����б�
+	 * 锟斤拷锟斤拷锟斤拷锟侥癸拷锟斤拷锟斤拷聘锟斤拷鹿锟斤拷锟斤拷斜锟�
 	 * @param needleStoryTitle
 	 */
 	private void updateStoryListByInputStoryTitle(String needleStoryTitle){
@@ -328,12 +333,12 @@ public class StoryHome extends ActionBarActivity{
 	
 	
 	/**
-	 * ���ðٶ������Ի���
+	 * 锟斤拷锟矫百讹拷锟斤拷锟斤拷锟皆伙拷锟斤拷
 	 * @param view
 	 */
 	public void invokeBaiduVoice(View view){
 		
-		// ������ڲ��Ź���, ����ֹͣ��ǰ�Ĳ��ţ�����Ӱ������ʶ��Ľ��
+		// 锟斤拷锟斤拷锟斤拷诓锟斤拷殴锟斤拷锟�, 锟斤拷锟斤拷停止锟斤拷前锟侥诧拷锟脚ｏ拷锟斤拷锟斤拷影锟斤拷锟斤拷锟斤拷识锟斤拷慕锟斤拷
 		if(MediaPlayerHandler.getInstance().isPlaying()){
 			this.playOrPauseOnclick(null);
 		}
@@ -344,23 +349,23 @@ public class StoryHome extends ActionBarActivity{
 		
 		Bundle params= new Bundle();
 		
-		//���ÿ��� API Key 
+		//锟斤拷锟矫匡拷锟斤拷 API Key 
 		params.putString(BaiduASRDigitalDialog.PARAM_API_KEY, "7Ad10dy9IB1qpNPS1mwSh4Is"); 
 		
-		//���ÿ���ƽ̨ Secret Key 
+		//锟斤拷锟矫匡拷锟斤拷平台 Secret Key 
 		params.putString(BaiduASRDigitalDialog.PARAM_SECRET_KEY, "NziRvQkD1SqA8TjYSyhxfrVnhUWbH9Lo"); 
 		
-		//����ʶ������:���������롢��ͼ������......,��ѡ��Ĭ��Ϊ���롣
+		//锟斤拷锟斤拷识锟斤拷锟斤拷锟斤拷:锟斤拷锟斤拷锟斤拷锟斤拷锟诫、锟斤拷图锟斤拷锟斤拷锟斤拷......,锟斤拷选锟斤拷默锟斤拷为锟斤拷锟诫。
 //		params.putInt( BaiduASRDigitalDialog.PARAM_PROP, VoiceRecognitionConfig.PROP_INPUT);
 		
-		//������������:������ͨ��,��������,Ӣ��,��ѡ��Ĭ��Ϊ������ͨ��
+		//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷:锟斤拷锟斤拷锟斤拷通锟斤拷,锟斤拷锟斤拷锟斤拷锟斤拷,英锟斤拷,锟斤拷选锟斤拷默锟斤拷为锟斤拷锟斤拷锟斤拷通锟斤拷
 		params.putString( BaiduASRDigitalDialog.PARAM_LANGUAGE, VoiceRecognitionConfig.LANGUAGE_CHINESE);
 		
-		//�����Ҫ�������,�����·���������Ϊ���벻֧�� 
+		//锟斤拷锟斤拷锟揭拷锟斤拷锟斤拷锟斤拷,锟斤拷锟斤拷锟铰凤拷锟斤拷锟斤拷锟斤拷锟斤拷为锟斤拷锟诫不支锟斤拷 
 //		params.putBoolean(BaiduASRDigitalDialog.PARAM_NLU_ENABLE, true);
 		
-		// ���öԻ�������,��ѡ��BaiduASRDigitalDialog �ṩ�����������졢�̡���������ɫ,ÿ���� ɫ�ַ�����������ɫ����
-		// �� 8 ������,�����߿��԰���ѡ��,ȡֵ�ο� BaiduASRDigitalDialog �� ǰ׺Ϊ THEME_�ĳ�����Ĭ��Ϊ����ɫ 
+		// 锟斤拷锟矫对伙拷锟斤拷锟斤拷锟斤拷,锟斤拷选锟斤拷BaiduASRDigitalDialog 锟结供锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟届、锟教★拷锟斤拷锟斤拷锟斤拷锟斤拷色,每锟斤拷锟斤拷 色锟街凤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷色锟斤拷锟斤拷
+		// 锟斤拷 8 锟斤拷锟斤拷锟斤拷,锟斤拷锟斤拷锟竭匡拷锟皆帮拷锟斤拷选锟斤拷,取值锟轿匡拷 BaiduASRDigitalDialog 锟斤拷 前缀为 THEME_锟侥筹拷锟斤拷锟斤拷默锟斤拷为锟斤拷锟斤拷色 
 		params.putInt(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_RED_DEEPBG);
 		
 		mDialog = new BaiduASRDigitalDialog(this,params);
@@ -372,14 +377,14 @@ public class StoryHome extends ActionBarActivity{
 	
 	
 	/**
-	 * �ӷ�������ȡ������Դ
+	 * 锟接凤拷锟斤拷锟斤拷锟斤拷取锟斤拷锟斤拷锟斤拷源
 	 */
 	private void getStoryListFromServer()
 	{
-		// ���͵�½����
+		// 锟斤拷锟酵碉拷陆锟斤拷锟斤拷
 		ApiClent.getStoryList("", new ClientCallback() {
 						
-			// �ɹ�
+			// 锟缴癸拷
 			public void  onSuccess(Object data) {
 				
 				String stringRes = data.toString();
@@ -405,12 +410,12 @@ public class StoryHome extends ActionBarActivity{
 				
 			}
 			
-			// ʧ��
+			// 失锟斤拷
 			public void onFailure(String message) {
 				Log.e(ConstantsCommon.LOG_TAG, message);
 			}
 			
-			// ����
+			// 锟斤拷锟斤拷
 			public void onError(Exception e) {
 				Log.e(ConstantsCommon.LOG_TAG, e.getMessage());
 			}

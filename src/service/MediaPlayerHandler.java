@@ -1,7 +1,9 @@
-package com.ai.ui;
+package service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import model.StoryItem;
 import android.media.MediaPlayer;
 
 /**

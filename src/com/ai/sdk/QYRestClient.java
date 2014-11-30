@@ -3,8 +3,8 @@ package com.ai.sdk;
 import android.content.Context;
 import android.util.Log;
 
-import com.ai.constants.ApiURL;
-import com.ai.constants.ConstantsCommon;
+import constants.ApiURL;
+import constants.ConstantsCommon;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -19,7 +19,7 @@ public class QYRestClient {
 	  }
 
 	  /**
-	   * ??????get请�??
+	   * ??????get璇凤拷??
 	   * @param url
 	   * @param params
 	   * @param responseHandler
@@ -34,7 +34,7 @@ public class QYRestClient {
 
 
 	  /**
-	   * ??????post请�??
+	   * ??????post璇凤拷??
 	   * @param url
 	   * @param params
 	   * @param responseHandler
@@ -49,7 +49,7 @@ public class QYRestClient {
 	  }
 
 	  /**
-	   * ??��??�???�路�?
+	   * ??锟斤拷??锟�???锟借矾锟�?
 	   * @param relativeUrl
 	   * @return
 	   */

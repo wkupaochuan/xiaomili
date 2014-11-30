@@ -1,6 +1,4 @@
-package com.ai.ui;
-
-import java.io.File;
+package model;
 
 /**
  * 故事条目
@@ -32,12 +30,6 @@ public class StoryItem {
 	public StoryItem(){
 		
 	}
-
-	
-	
-	
-	
-	
 	
 	
 /*******************************私有属性的get & set 方法************************************************/	
@@ -63,7 +55,6 @@ public class StoryItem {
 			this.location = location;
 		}
 		else{
-			//TODO 遇到不合法地址如何处理
 		}
 	}
 	
