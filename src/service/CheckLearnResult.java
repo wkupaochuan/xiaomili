@@ -23,27 +23,37 @@ public class CheckLearnResult {
 	 */
 	public static LetterLearnResult gradeRepeatedCentence(String standard, String repeatedCentence)
 	{
-		int missingLetterCount = 0;
+		int foundedLetterCount = 0;
 		Map<String, Object> compareResult = new HashMap<String, Object>();
 		String resString = "";
+		boolean foundFlag = false;
 		
 		for(int i = 0; i < standard.length(); ++i)
 		{
-			if(i > repeatedCentence.length() || standard.charAt(i) != repeatedCentence.charAt(i))
+			foundFlag = false;
+			for(int j = 0; j < repeatedCentence.length(); ++j)
 			{
-				missingLetterCount ++;
+				if(standard.charAt(i) == repeatedCentence.charAt(j))
+				{
+					foundFlag = true;
+				}
+			}
+			
+			if(foundFlag)
+			{
+				foundedLetterCount ++;
 				compareResult.put(standard.charAt(i) + "", false);
-				resString += "<font color=red>" + standard.charAt(i) + "</font>";
+				resString += "<font>" + standard.charAt(i) + "</font>";
 			}
 			else{
 				compareResult.put(standard.charAt(i) + "", true);
-				resString += "<font>" + standard.charAt(i) + "</font>";
+				resString += "<font color=red>" + standard.charAt(i) + "</font>";
 			}
 		}
 		
-		float grade = missingLetterCount/standard.length();
+		float grade = (float)foundedLetterCount/standard.length();
 		
-		if( grade > 0 && grade < CheckLearnResult.minGrade)
+		if(grade < CheckLearnResult.minGrade)
 		{
 			return CheckLearnResult.gradeRepeatedCentenceByPinyin(standard, repeatedCentence);
 		}
@@ -51,34 +61,6 @@ public class CheckLearnResult {
 		res.setGrade(grade);
 		res.setLetterCompareResult(compareResult);
 		res.setResString(resString);
-		return res;
-	}
-	
-	
-	
-	/**
-	 * 获取识别后的字符串
-	 * @param letterResult
-	 * @return
-	 */
-	public static String getLearnResultString(Map<String, Object> letterResult)
-	{
-		String res = "";
-		Iterator<String> iter = letterResult.keySet().iterator();
-		while(iter.hasNext())
-		{
-			String key = iter.next();
-			boolean result =  (Boolean) letterResult.get(key);
-			
-			if(result)
-			{
-				res += "<font color=red>" + key + "</font>";
-			}
-			else{
-				res += "<font >" + key + "</font>";
-			}
-		}
-		
 		return res;
 	}
 	
@@ -95,24 +77,35 @@ public class CheckLearnResult {
 		List<String> repeatedCentencedPinyin =  XPinYinHelper.getPinyin(repeatedCentence);
 		String resString = "";
 		
-		int missingLetterCount = 0;
+		int foundedLetterCount = 0;
 		Map<String, Object> compareResult = new HashMap<String, Object>();
+		
+		boolean foundFlag = false;
 		
 		for(int i = 0; i < standardPinyin.size(); ++i)
 		{
-			if(i > repeatedCentencedPinyin.size() || standardPinyin.get(i) != repeatedCentencedPinyin.get(i))
+			foundFlag = false;
+			for(int j = 0; j < repeatedCentencedPinyin.size(); ++j)
 			{
-				missingLetterCount ++;
-				compareResult.put(standardPinyin.get(i), false);
-				resString += "<font color=red>" + standard.charAt(i) + "</font>";
+				if(standardPinyin.get(i).equalsIgnoreCase(repeatedCentencedPinyin.get(j)))
+				{
+					foundFlag = true;
+				}
+			}
+			
+			if(foundFlag)
+			{
+				foundedLetterCount ++;
+				compareResult.put(standard.charAt(i) + "", false);
+				resString += "<font>" + standard.charAt(i) + "</font>";
 			}
 			else{
-				compareResult.put(standardPinyin.get(i), true);
-				resString += "<font color>" + standard.charAt(i) + "</font>";
+				compareResult.put(standard.charAt(i) + "", true);
+				resString += "<font color=red>" + standard.charAt(i) + "</font>";
 			}
 		}
 		
-		float grade = missingLetterCount/standard.length();
+		float grade = foundedLetterCount/standard.length();
 		
 		LetterLearnResult res = new LetterLearnResult();
 		res.setGrade(grade);
