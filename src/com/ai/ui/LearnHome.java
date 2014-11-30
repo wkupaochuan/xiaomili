@@ -11,9 +11,9 @@ import service.LearnListService;
 import tools.XMediaPlayer;
 
 import base_ui.BaseActivity;
+
+import com.ai.sdk.BaiduVoice;
 import com.ai.welcome.R;
-import com.baidu.voicerecognition.android.VoiceRecognitionConfig;
-import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
 import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 
 import constants.ConstantsCommon;
@@ -21,13 +21,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class LearnHome extends BaseActivity{
 	
-	private BaiduASRDigitalDialog mDialog = null;
 	private DialogRecognitionListener mRecognitionListener;
 	
 	private List<LearnItemModel> learnList;
@@ -66,44 +64,8 @@ public class LearnHome extends BaseActivity{
      * 调用百度语音识别
      * @param view
      */
-	public void invokeBaiduVoice(View view){
-		this.initBaiduVoiceDialog();
-	}
-	
-	
-
-	/**
-	 * 初始化百度语音识别窗口
-	 */
-	public void initBaiduVoiceDialog()
-	{
-		// 释放
-        if (this.mDialog != null) {
-        	this.mDialog.dismiss();
-        }
-		
-		Bundle params= new Bundle();
-		
-		//设置开放 API Key 
-		params.putString(BaiduASRDigitalDialog.PARAM_API_KEY, "7Ad10dy9IB1qpNPS1mwSh4Is"); 
-		
-		//设置开放平台 Secret Key 
-		params.putString(BaiduASRDigitalDialog.PARAM_SECRET_KEY, "NziRvQkD1SqA8TjYSyhxfrVnhUWbH9Lo"); 
-		
-		//设置语种类型:中文普通话,中文粤语,英文,可选。默认为中文普通话
-		params.putString( BaiduASRDigitalDialog.PARAM_LANGUAGE, VoiceRecognitionConfig.LANGUAGE_CHINESE);
-		
-		// 设置主题
-		params.putInt(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_RED_DEEPBG);
-		
-		// 实例化输入框
-		mDialog = new BaiduASRDigitalDialog(this,params);
-		
-		// 设置回调
-		mDialog.setDialogRecognitionListener(this.mRecognitionListener);
-
-		// 展示
-		mDialog.show();		
+	public void invokeBaiduVoice(){
+		BaiduVoice.initBaiduVoiceDialog(this, this.mRecognitionListener).show();
 	}
 	
 	
@@ -227,7 +189,7 @@ public class LearnHome extends BaseActivity{
 		XMediaPlayer.getInstance().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 	        
 	        public void onCompletion(MediaPlayer arg0) {
-	        	initBaiduVoiceDialog();
+	        	invokeBaiduVoice();
 	        }
 		});
 	}
