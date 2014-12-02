@@ -10,7 +10,7 @@ import service.study.CheckLearnResult;
 import service.study.LearnListService;
 import tools.XMediaPlayer;
 
-import sdk.BaiduVoice;
+import tools.BaiduVoice;
 import com.ai.welcome.R;
 import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 
