@@ -1,4 +1,4 @@
-package com.ai.ui;
+package ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class StoryHome extends BaseActivity{
+public class Story extends BaseActivity{
 	
 	// 锟斤拷锟斤拷锟叫�?锟斤拷
 	private ListView lvStoryList;
@@ -166,7 +166,7 @@ public class StoryHome extends BaseActivity{
     	// 锟斤拷锟矫癸拷锟斤拷锟叫憋拷页锟斤拷锟斤拷锟斤拷
     	this.lvStoryList.setAdapter(
     			new SimpleAdapter(
-    					StoryHome.this
+    					Story.this
     					, listMap
     					, R.layout.story_item
     					, new String[]{"story_item_title"} 
@@ -403,7 +403,7 @@ public class StoryHome extends BaseActivity{
 			    		storyList.add(storyItem);
 					}
 					
-					StoryHome.this.initStoryListView(storyList);
+					Story.this.initStoryListView(storyList);
 				} catch (JSONException e) {
 				}
 

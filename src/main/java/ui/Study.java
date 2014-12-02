@@ -1,4 +1,4 @@
-package com.ai.ui;
+package ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class LearnHome extends BaseActivity{
+public class Study extends BaseActivity{
 	
 	private DialogRecognitionListener mRecognitionListener;
 	
@@ -40,7 +40,7 @@ public class LearnHome extends BaseActivity{
 	 */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.learn_home);
+        setContentView(R.layout.study_home);
         
         // 设置百度语音回调
         this.initBiduVoiceRecgnitionListener();
@@ -161,7 +161,7 @@ public class LearnHome extends BaseActivity{
      */
     private void addCentence(String text, int ViewId)
     {
-    	TextView tx = new TextView(LearnHome.this);
+    	TextView tx = new TextView(Study.this);
     	tx.setId(ViewId);
     	tx.setTextSize(30);
     	tx.setText(text);

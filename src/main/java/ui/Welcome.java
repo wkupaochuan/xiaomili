@@ -1,4 +1,4 @@
-package com.ai.ui;
+package ui;
 
 
 import base_ui.BaseActivity;
@@ -11,35 +11,35 @@ import android.view.View;
 
 public class Welcome extends BaseActivity {
 
-	/**
-	 * 初始化页面
-	 */
+    /**
+     * 鏋勫缓绐楀彛
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
     }
-    
-    
+
+
     /**
-     * 听故事按钮点击事件
+     * 鏁呬簨椤甸潰
      * @param view
      */
     public void storyTabOnClick (View view){
-    	
-    	// 跳转到听故事的主页面
-		Intent intent = new Intent(this, StoryHome.class);
+
+
+		Intent intent = new Intent(this, Story.class);
 		startActivity(intent);
     }
-    
-    
+
+
     /**
-     * 点击听课程按钮
+     * 瀛︿範椤甸潰
      * @param view
      */
-    public void learnTabOnClick (View view){
-    	
-    	// 跳转到学习课程页面
-		Intent intent = new Intent(this, LearnHome.class);
+    public void studyTabOnClick (View view){
+
+		Intent intent = new Intent(this, Study.class);
 		startActivity(intent);
     }
     

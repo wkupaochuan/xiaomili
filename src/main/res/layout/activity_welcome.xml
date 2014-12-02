@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.ai.ui.Welcome" >
+    tools:context="ui.Welcome" >
 
     <ImageButton
         android:id="@+id/btn_story_tab"
@@ -21,13 +21,13 @@
         />
 
     <ImageButton
-        android:id="@+id/btn_knowledge_tab"
+        android:id="@+id/btn_study_tab"
         android:layout_width="147dp"
         android:layout_height="220dp"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/btn_story_tab"
         android:src="@drawable/learn_tab"
-        android:onClick="learnTabOnClick"
+        android:onClick="studyTabOnClick"
         
         android:layout_marginRight="0dp" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/btn_showdown_tab"
         android:layout_width="147dp"
         android:layout_height="220dp"
-        android:layout_alignLeft="@+id/btn_knowledge_tab"
+        android:layout_alignLeft="@+id/btn_study_tab"
         android:layout_alignTop="@+id/btn_im_tab"
         android:src="@android:drawable/alert_dark_frame" />
 

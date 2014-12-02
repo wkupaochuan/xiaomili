@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/listbg"
-    tools:context="com.ai.ui.Welcome" >
+    tools:context="ui.Welcome" >
 
 	    <ListView
 	        android:id="@+id/lv_music_list"
