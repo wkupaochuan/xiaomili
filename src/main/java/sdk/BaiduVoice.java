@@ -1,4 +1,4 @@
-package com.ai.sdk;
+package sdk;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,32 +10,32 @@ import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 public class BaiduVoice {
 
 	/**
-	 * ³õÊ¼»¯°Ù¶ÈÓïÒôÊ¶±ð´°¿Ú
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ð´°¿ï¿½
 	 */
 	public static BaiduASRDigitalDialog  initBaiduVoiceDialog(Context view, DialogRecognitionListener mRecognitionListener)
 	{
 	    BaiduASRDigitalDialog mDialog = null;
 		Bundle params= new Bundle();
 		
-		//ÉèÖÃ¿ª·Å API Key 
+		//ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ API Key 
 		params.putString(BaiduASRDigitalDialog.PARAM_API_KEY, "7Ad10dy9IB1qpNPS1mwSh4Is"); 
 		
-		//ÉèÖÃ¿ª·ÅÆ½Ì¨ Secret Key 
+		//ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½Æ½Ì¨ Secret Key 
 		params.putString(BaiduASRDigitalDialog.PARAM_SECRET_KEY, "NziRvQkD1SqA8TjYSyhxfrVnhUWbH9Lo"); 
 		
-		//ÉèÖÃÓïÖÖÀàÐÍ:ÖÐÎÄÆÕÍ¨»°,ÖÐÎÄÔÁÓï,Ó¢ÎÄ,¿ÉÑ¡¡£Ä¬ÈÏÎªÖÐÎÄÆÕÍ¨»°
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,Ó¢ï¿½ï¿½,ï¿½ï¿½Ñ¡ï¿½ï¿½Ä¬ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
 		params.putString( BaiduASRDigitalDialog.PARAM_LANGUAGE, VoiceRecognitionConfig.LANGUAGE_CHINESE);
 		
-		// ÉèÖÃÖ÷Ìâ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		params.putInt(BaiduASRDigitalDialog.PARAM_DIALOG_THEME, BaiduASRDigitalDialog.THEME_RED_DEEPBG);
 		
-		// ½ûÓÃ±êµã·ûºÅ
+		// ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½
 		params.putBoolean(BaiduASRDigitalDialog.PARAM_PUNCTUATION_ENABLE, false);
 		
-		// ÊµÀý»¯ÊäÈë¿ò
+		// Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		mDialog = new BaiduASRDigitalDialog(view, params);
 		
-		// ÉèÖÃ»Øµ÷
+		// ï¿½ï¿½ï¿½Ã»Øµï¿½
 		mDialog.setDialogRecognitionListener(mRecognitionListener);
 		
 		return mDialog;

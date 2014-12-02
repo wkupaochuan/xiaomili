@@ -1,4 +1,4 @@
-package com.ai.sdk;
+package sdk;
 
 import android.content.Context;
 import android.util.Log;

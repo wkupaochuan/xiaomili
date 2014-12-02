@@ -14,10 +14,9 @@ import org.json.JSONObject;
 import service.story.MediaPlayerHandler;
 import service.story.StoryListHandler;
 
-import base_ui.BaseActivity;
 import constants.ConstantsCommon;
-import com.ai.sdk.ApiClent;
-import com.ai.sdk.ApiClent.ClientCallback;
+import sdk.ApiClent;
+import sdk.ApiClent.ClientCallback;
 import com.ai.welcome.R;
 import com.baidu.voicerecognition.android.VoiceRecognitionConfig;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;

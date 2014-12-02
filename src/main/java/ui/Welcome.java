@@ -1,8 +1,6 @@
 package ui;
 
 
-import base_ui.BaseActivity;
-
 import com.ai.welcome.R;
 import android.content.Intent;
 import android.os.Bundle;

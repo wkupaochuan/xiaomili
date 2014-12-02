@@ -1,4 +1,4 @@
-package com.ai.sdk;
+package sdk;
 
 
 import org.apache.http.Header;
