@@ -11,8 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import service.MediaPlayerHandler;
-import service.StoryListHandler;
+import service.story.MediaPlayerHandler;
+import service.story.StoryListHandler;
 
 import base_ui.BaseActivity;
 import constants.ConstantsCommon;

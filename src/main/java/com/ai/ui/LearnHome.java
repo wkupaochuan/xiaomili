@@ -6,8 +6,8 @@ import java.util.List;
 import model.LearnItemModel;
 import model.LetterLearnResult;
 
-import service.CheckLearnResult;
-import service.LearnListService;
+import service.study.CheckLearnResult;
+import service.study.LearnListService;
 import tools.XMediaPlayer;
 
 import base_ui.BaseActivity;

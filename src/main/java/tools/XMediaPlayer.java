@@ -2,13 +2,19 @@ package tools;
 
 import android.media.MediaPlayer;
 
+
 /**
- * È«¾ÖÎ¨Ò»µÄÒôÆµ²¥·ÅÆ÷
+ * å…¨å±€å˜é‡mediaPlayer
  */
 public class XMediaPlayer {
 	
 	private static  MediaPlayer instance;
-	
+
+
+    /**
+     * è·å–æ’­æ”¾å™¨å®ä¾‹
+     * @return
+     */
 	public static MediaPlayer getInstance()
 	{
 		if(instance == null)
@@ -17,20 +23,20 @@ public class XMediaPlayer {
 		}
 		return instance;
 	}
-	
-	
-	 /**
-     * ²¥·Å
+
+
+    /**
+     * æ’­æ”¾
      * @param path
      */
     public static void play(String path)
     {
-    	// ÊÍ·ÅÔ­ÓĞ×ÊÔ´£¬ÖØĞÂ²¥·Å
-    	XMediaPlayer.getInstance().reset();
+        MediaPlayer mp = XMediaPlayer.getInstance();
+        mp.reset();
 		try {
-			XMediaPlayer.getInstance().setDataSource(path);
-			XMediaPlayer.getInstance().prepare();
-			XMediaPlayer.getInstance().start();
+            mp.setDataSource(path);
+            mp.prepare();
+            mp.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

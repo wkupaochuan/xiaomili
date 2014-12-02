@@ -1,4 +1,4 @@
-package service;
+package service.story;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,40 +7,40 @@ import model.StoryItem;
 import android.media.MediaPlayer;
 
 /**
- * ¶àÃ½Ìå´¦ÀíÀà
+ * ï¿½ï¿½Ã½ï¿½å´¦ï¿½ï¿½ï¿½ï¿½
  *
  */
 public class MediaPlayerHandler {
 	
-	// ÕýÔÚ²¥·Å×´Ì¬
+	// ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½×´Ì¬
 	public static final int PLAYING_STATUS_PLAYING = 1;
 	
-	// ÕýÔÚÔÝÍ£×´Ì¬
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£×´Ì¬
 	public static final int PLAYING_STATUS_PAUSE = 0;
 	
-	// ÕýÔÚÍ£Ö¹×´Ì¬
+	// ï¿½ï¿½ï¿½ï¿½Í£Ö¹×´Ì¬
 	public static final int PLAYING_STATUS_STOP = -1;
 	
-	// µ±Ç°²¥·ÅµÄ¹ÊÊÂid£¬Îª-1£¬±íÊ¾µ±Ç°ÁÐ±íÀïÃ»ÓÐ¹ÊÊÂÔÚ²¥·Å
+	// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ÅµÄ¹ï¿½ï¿½ï¿½idï¿½ï¿½Îª-1ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ç°ï¿½Ð±ï¿½ï¿½ï¿½Ã»ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½
 	public static final int ALIVE_STORY_ID_NULL = -1;
 	
-	// ¹ÊÊÂÁÐ±í
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 	private List<StoryItem> storyList = new ArrayList<StoryItem>();
 	
-	// µ±Ç°²¥·ÅµÄ¹ÊÊÂid(-1´ú±íÄ¿Ç°ÔÝÎÞ²¥·Å)
+	// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ÅµÄ¹ï¿½ï¿½ï¿½id(-1ï¿½ï¿½ï¿½Ä¿Ç°ï¿½ï¿½ï¿½Þ²ï¿½ï¿½ï¿½)
 	private int aliveStoryId ;
 	
-	// µ±Ç°µÄ²¥·Å×´Ì¬
+	// ï¿½ï¿½Ç°ï¿½Ä²ï¿½ï¿½ï¿½×´Ì¬
 	private int playingStatus;
 
-	// µ¥Àý
+	// ï¿½ï¿½ï¿½ï¿½
 	private static MediaPlayerHandler instance;
 	
-	// ¶àÃ½Ìå¶ÔÏó
+	// ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½
 	MediaPlayer mediaPlayer;
 	
 	/**
-	 * ÉèÖÃ²¥·ÅÆ÷µÄ¹ÊÊÂÁÐ±í
+	 * ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 	 * @param storyList
 	 */
 	public void setStoryList(List<StoryItem> storyList){
@@ -48,19 +48,19 @@ public class MediaPlayerHandler {
 	}
 	
 	/**
-	 * ¸üÐÂ²¥·ÅÆ÷µÄ¹ÊÊÂÁÐ±í
+	 * ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 	 * @param storyList
 	 */
 	public void updateStoryList(List<StoryItem> storyList){
 		this.storyList = storyList;
 		
-		// Í¬²½¸üÐÂµ±Ç°²¥·Å¹ÊÊÂÎª¿Õ(¹ÊÊÂÁÐ±íÒÑ¾­¸üÐÂ£¬ËùÒÔÔ­ÓÐid²»ÔÙÉúÐ§)
+		// Í¬ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Ç°ï¿½ï¿½ï¿½Å¹ï¿½ï¿½ï¿½Îªï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§)
 		this.updateAliveSotoryId(-1);
 	}
 	
 
 	/**
-	 * ¼ì²éÊÇ·ñÔÚ²¥·Å×´Ì¬
+	 * ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ú²ï¿½ï¿½ï¿½×´Ì¬
 	 * @return
 	 */
 	public boolean isPlaying(){
@@ -68,7 +68,7 @@ public class MediaPlayerHandler {
 	}
 	
 	/**
-	 * ¼ì²éÊÇ·ñÔÚÔÝÍ£×´Ì¬
+	 * ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Í£×´Ì¬
 	 * @return
 	 */
 	public boolean isPaused(){
@@ -77,7 +77,7 @@ public class MediaPlayerHandler {
 	
 	
 	/**
-	 * ¼ì²éÊÇ·ñÔÚÍ£Ö¹×´Ì¬
+	 * ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í£Ö¹×´Ì¬
 	 * @return
 	 */
 	public boolean isStoped(){
@@ -87,31 +87,31 @@ public class MediaPlayerHandler {
 
 	
 	/**
-	 * ¿ªÊ¼²¥·ÅÄ³¸öÖ¸¶¨µÄ¹ÊÊÂ
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½
 	 */
 	public void playStoryById(int storyId){
 		
-		// TODO Ã»ÓÐ¹ÊÊÂ¿ÉÒÔ²¥·Å
+		// TODO Ã»ï¿½Ð¹ï¿½ï¿½Â¿ï¿½ï¿½Ô²ï¿½ï¿½ï¿½
 		if(this.storyList.size() == 0){
 			
 		}
 		
-		// TODO Ö¸¶¨µÄ¹ÊÊÂ²»ÔÚµ±Ç°ÁÐ±íÖÐ, ÔÝÇÒ´¦ÀíÎª²¥·ÅµÚÒ»¸ö¹ÊÊÂ£¬Ã»ÓÐÌáÊ¾
+		// TODO Ö¸ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½Â²ï¿½ï¿½Úµï¿½Ç°ï¿½Ð±ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Åµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ê¾
 		if(storyId < 0 || storyId >= this.storyList.size()){
 			storyId = 0;
 		}
 		
-    	// »ñÈ¡¹ÊÊÂÌõÄ¿
+    	// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
     	StoryItem storyItem = this.storyList.get(storyId);
     	
-    	// ¸üÐÂµ±Ç°²¥·ÅµÄ¹ÊÊÂid
+    	// ï¿½ï¿½ï¿½Âµï¿½Ç°ï¿½ï¿½ï¿½ÅµÄ¹ï¿½ï¿½ï¿½id
     	this.updateAliveSotoryId(storyId);
     	
-    	// ¸üÐÂµ±Ç°¹ÊÊÂ²¥·Å×´Ì¬Îª¡°ÕýÔÚ²¥·Å¡±
+    	// ï¿½ï¿½ï¿½Âµï¿½Ç°ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½×´Ì¬Îªï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½Å¡ï¿½
     	this.playingStatus = MediaPlayerHandler.PLAYING_STATUS_PLAYING;
 		
 		try {
-			// ÊÍ·ÅÔ­ÓÐ×ÊÔ´£¬ÖØÐÂ²¥·Å
+			// ï¿½Í·ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½
 			this.mediaPlayer.reset();
 			this.mediaPlayer.setDataSource(storyItem.getLocation());
 			this.mediaPlayer.prepare();
@@ -124,7 +124,7 @@ public class MediaPlayerHandler {
 	
 	
 	/**
-	 * ²¥·Å
+	 * ï¿½ï¿½ï¿½ï¿½
 	 */
 	public void play(){
 		if(this.isStoped()){
@@ -134,42 +134,42 @@ public class MediaPlayerHandler {
 
 	
 	/**
-	 * ÔÝÍ£²¥·Å
+	 * ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½
 	 */
 	public void pause(){
-		// Èç¹ûÕýÔÚ²¥·Å£¬Ôò´¦ÀíÎªÔÝÍ£²¥·Å
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½
 		if(this.isPlaying()){
-			// ÔÝÍ£
+			// ï¿½ï¿½Í£
 			this.mediaPlayer.pause();
 			
-			// ¸üÐÂ²¥·Å×´Ì¬ÎªÔÝÍ£
+			// ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½×´Ì¬Îªï¿½ï¿½Í£
 			this.playingStatus = MediaPlayerHandler.PLAYING_STATUS_PAUSE;
 		}
 	}
 	
 	/**
-	 * ¼ÌÐø²¥·Å
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public void continutePlaying(){
-		// Èç¹ûÕýÔÚ²¥·Å£¬Ôò´¦ÀíÎªÔÝÍ£²¥·Å
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½
 		if(this.isPaused()){
-			// ¼ÌÐø²¥·Å
+			// ï¿½ï¿½ï¿½ï¿½ï¿½
 			this.mediaPlayer.start();
 			
-			// ¸üÐÂ²¥·Å×´Ì¬ÎªÕýÔÚ²¥·Å
+			// ï¿½ï¿½ï¿½Â²ï¿½ï¿½ï¿½×´Ì¬Îªï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½
 			this.playingStatus = MediaPlayerHandler.PLAYING_STATUS_PLAYING;
 		}
 	}
 	
     /**
-     * ²¥·ÅÏÂÒ»¸ö¹ÊÊÂ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public  void playNextStory(){
-    	// ³õ´Î²¥·Å
+    	// ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½
     	if(MediaPlayerHandler.ALIVE_STORY_ID_NULL == this.aliveStoryId){
     		this.playStoryById(0);
     	}
-    	// ÁÐ±íÄ©Î²
+    	// ï¿½Ð±ï¿½Ä©Î²
     	else if(this.aliveStoryId == (this.storyList.size() - 1) ){
     		this.playStoryById(0);
     	}
@@ -181,14 +181,14 @@ public class MediaPlayerHandler {
     
     
     /**
-     * ²¥·ÅÉÏÒ»¸ö¹ÊÊÂ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public void playForwardStory(){
-    	// ³õ´Î²¥·Å
+    	// ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½
     	if(this.aliveStoryId == MediaPlayerHandler.ALIVE_STORY_ID_NULL){
     		this.playStoryById(0);
     	}
-    	// µÚÒ»Ê×
+    	// ï¿½ï¿½Ò»ï¿½ï¿½
     	else if(this.aliveStoryId == 0){
     		this.playStoryById(this.storyList.size() - 1);
     	}
@@ -199,7 +199,7 @@ public class MediaPlayerHandler {
 
 	
 	/**
-	 * µ¥ÀýÄ£Ê½
+	 * ï¿½ï¿½ï¿½ï¿½Ä£Ê½
 	 */
 	public static MediaPlayerHandler getInstance(){
 		if(null == instance)
@@ -210,27 +210,27 @@ public class MediaPlayerHandler {
 	}
 
 	/**
-	 * ¹¹Ôì·½·¨
+	 * ï¿½ï¿½ï¿½ì·½ï¿½ï¿½
 	 */
 	public MediaPlayerHandler(){
 		if(null == this.mediaPlayer){
-			// ÊµÀý»¯²¥·ÅÆ÷
+			// Êµï¿½ï¿½ï¿½ï¿½ï¿½
 			this.mediaPlayer = new MediaPlayer();
 			
-			// ÉèÖÃ²¥·ÅÍê±ÏÊÂ¼þ
+			// ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 			this.setOnCompletionListener();
 			
-			// ÉèÖÃµ±Ç°²¥·Å×´Ì¬(Í£Ö¹)
+			// ï¿½ï¿½ï¿½Ãµï¿½Ç°ï¿½ï¿½ï¿½ï¿½×´Ì¬(Í£Ö¹)
 			this.playingStatus = MediaPlayerHandler.PLAYING_STATUS_STOP;
 			
-			// ÉèÖÃµ±Ç°²¥·ÅµÄ¹ÊÊÂid(ÔÝÎÞ²¥·Å)
+			// ï¿½ï¿½ï¿½Ãµï¿½Ç°ï¿½ï¿½ï¿½ÅµÄ¹ï¿½ï¿½ï¿½id(ï¿½ï¿½ï¿½Þ²ï¿½ï¿½ï¿½)
 			this.aliveStoryId = -1;
 		}
 	}
 	
 	
 	/**
-	 * ÉèÖÃµ¥¸öÒôÆµ²¥·ÅÍê±ÏÊÂ¼þ
+	 * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 	 */
 	private void setOnCompletionListener(){
 		this.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -242,7 +242,7 @@ public class MediaPlayerHandler {
 	}
 	
 	/**
-	 * ¸üÐÂÕýÔÚ²¥·ÅµÄ¹ÊÊÂid
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ÅµÄ¹ï¿½ï¿½ï¿½id
 	 * @param storyId
 	 */
 	private void updateAliveSotoryId(int storyId){

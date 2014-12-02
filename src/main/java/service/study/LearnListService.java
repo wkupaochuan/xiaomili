@@ -1,4 +1,4 @@
-package service;
+package service.study;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import model.LearnItemModel;
 public class LearnListService {
 	
 	/**
-	 * »ñÈ¡Ò»Ê×Ê«
+	 * ï¿½ï¿½È¡Ò»ï¿½ï¿½Ê«
 	 * @return
 	 */
 	public static List<LearnItemModel> getList()
@@ -17,27 +17,27 @@ public class LearnListService {
 		
 		LearnItemModel item = new LearnItemModel();
 		
-		item.setMediaText("µÇðÙÈ¸Â¥ÍõÖ®»Á");
+		item.setMediaText("ï¿½ï¿½ï¿½ï¿½È¸Â¥ï¿½ï¿½Ö®ï¿½ï¿½");
 		item.setMediaUrl("http://toy-admin.wkupaochuan.com/class_files/title.mp3");
 		list.add(item);
 		
 		LearnItemModel item1 = new LearnItemModel();
-		item1.setMediaText("°×ÈÕÒÀÉ½¾¡");
+		item1.setMediaText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½");
 		item1.setMediaUrl("http://toy-admin.wkupaochuan.com/class_files/1.mp3");
 		list.add(item1);
 		
 		LearnItemModel item2 = new LearnItemModel();
-		item2.setMediaText("»ÆºÓÈëº£Á÷");
+		item2.setMediaText("ï¿½Æºï¿½ï¿½ëº£ï¿½ï¿½");
 		item2.setMediaUrl("http://toy-admin.wkupaochuan.com/class_files/2.mp3");
 		list.add(item2);
 		
 		LearnItemModel item3 = new LearnItemModel();
-		item3.setMediaText("ÓûÇîÇ§ÀïÄ¿");
+		item3.setMediaText("ï¿½ï¿½ï¿½ï¿½Ç§ï¿½ï¿½Ä¿");
 		item3.setMediaUrl("http://toy-admin.wkupaochuan.com/class_files/3.mp3");
 		list.add(item3);
 		
 		LearnItemModel item4 = new LearnItemModel();
-		item4.setMediaText("¸üÉÏÒ»²ãÂ¥");
+		item4.setMediaText("ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Â¥");
 		item4.setMediaUrl("http://toy-admin.wkupaochuan.com/class_files/4.mp3");
 		list.add(item4);
 		

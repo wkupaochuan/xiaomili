@@ -1,11 +1,8 @@
-package service;
+package service.study;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import tools.XPinYinHelper;
 
@@ -17,9 +14,9 @@ public class CheckLearnResult {
 	
 	
 	/**
-	 * ¸ø¸ú¶Á½á¹û´ò·Ö
-	 * @param standard				±ê×¼Óï¾ä
-	 * @param repeatedCentence		¸ú¶ÁÓï¾ä
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @param standard				ï¿½ï¿½×¼ï¿½ï¿½ï¿½
+	 * @param repeatedCentence		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static LetterLearnResult gradeRepeatedCentence(String standard, String repeatedCentence)
 	{
@@ -66,7 +63,7 @@ public class CheckLearnResult {
 	
 	
 	/**
-	 * ¸ù¾ÝÆ´Òô´ò·Ö
+	 * ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param standard
 	 * @param repeatedCentence
 	 * @return

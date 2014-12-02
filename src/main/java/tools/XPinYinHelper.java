@@ -8,22 +8,26 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+
 /**
- * ½«ÖĞÎÄ×Ö·û´®×ª»¯ÎªÆ´Òô×Ö·û´®Êı×é
- * @author xiaomili
+ * æ±‰å­—è½¬åŒ–ä¸ºæ‹¼éŸ³
  */
 public class XPinYinHelper {
 
+
+    /**
+     * å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ‹¼éŸ³å­—ç¬¦ä¸²æ•°ç»„
+     * @param str
+     * @return
+     */
 	public static List<String> getPinyin(String str)
 	{
-		// ·µ»ØµÄÆ´Òô×Ö·û´®Êı×é
 		List<String> pinyinRes = new ArrayList<String>();
-		
-		// Æ´ÒôÊä³ö¸ñÊ½£¬Ã»ÓĞÒôµ÷
+
+        // è¾“å‡ºæ ¼å¼è®¾ç½®ä¸ºæ²¡æœ‰éŸ³è°ƒ
 		HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
 		format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-		
-		// ×ª»¯ÎªÆ´ÒôÊı×é
+
 		try {
 			char[] charArray = str.toCharArray();
 			for(char tmp : charArray)
@@ -42,8 +46,7 @@ public class XPinYinHelper {
 		} catch (BadHanyuPinyinOutputFormatCombination e) {
 			
 		}
-		
-		// ·µ»Ø
+
 		return pinyinRes;
 	}
 	

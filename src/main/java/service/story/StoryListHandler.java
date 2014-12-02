@@ -1,4 +1,4 @@
-package service;
+package service.story;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,9 +17,9 @@ public class StoryListHandler {
 	
 	
 	/**
-	 * ¸ù¾Ý¹ÊÊÂÃû³Æ£¬²éÕÒ×îÏàËÆµÄ¹ÊÊÂÁÐ±í
-	 * @param originalStoryList			¹ÊÊÂÁÐ±íÈ«¼¯
-	 * @param needleStoryTitle			Ä¿±ê¹ÊÊÂÃû³Æ
+	 * ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÆµÄ¹ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
+	 * @param originalStoryList			ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½È«ï¿½ï¿½
+	 * @param needleStoryTitle			Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @return
 	 */
 	public static List<StoryItem> getMostSimilarStorys(List<StoryItem> originalStoryList, String needleStoryTitle ){
@@ -29,7 +29,7 @@ public class StoryListHandler {
 		List<StoryItem> hintStoryList = new ArrayList<StoryItem>();
 		
 		
-		// ¸øÃ¿¸ö¹ÊÊÂ¼ÆËãÓëÄ¿±ê¹ÊÊÂ±êÌâµÄÏàËÆ¶È
+		// ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
 		for(StoryItem storyItem: originalStoryList){
 			Map<String, Object> xx = new HashMap<String, Object>();
 			float similarity = getSimilarityOfTwoString(storyItem.getTitle(), needleStoryTitle);
@@ -40,10 +40,10 @@ public class StoryListHandler {
 			storyWithSimilarityPoint.add(xx);
 		}
 		
-		// ÅÅÐò(¸ù¾ÝÏàËÆ¶È)
+		// ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½)
         Collections.sort(storyWithSimilarityPoint, new MapComparator());
         
-        // È¡³ö×îÏàËÆµÄÇ°3¸ö
+        // È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½Ç°3ï¿½ï¿½
         int i = 0;
         for(Map<String, Object> m: storyWithSimilarityPoint){
         	hintStoryList.add((StoryItem)m.get("story_item"));
@@ -58,25 +58,25 @@ public class StoryListHandler {
 	
 	
 	/**
-	 * ¼ÆËãÁ½¸ö×Ö·û´®µÄÏàËÆ¶È
-	 * @param str1			µÚÒ»¸ö×Ö·û´®
-	 * @param str2			µÚ¶þ¸ö×Ö·û´®
-	 * Ó¦ÓÃ³¡¾°:DNA·ÖÎö ¡¡¡¡Æ´×Ö¼ì²é ¡¡¡¡ÓïÒô±æÊ¶ ¡¡¡¡³­Ï®Õì²â
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
+	 * @param str1			ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½
+	 * @param str2			ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½Ö·ï¿½
+	 * Ó¦ï¿½Ã³ï¿½ï¿½ï¿½:DNAï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ´ï¿½Ö¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï®ï¿½ï¿½ï¿½
 	 */
 	public static float getSimilarityOfTwoString(String str1,String str2) {
-		//¼ÆËãÁ½¸ö×Ö·û´®µÄ³¤¶È¡£
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½Ä³ï¿½ï¿½È¡ï¿½
 		int len1 = str1.length();
 		int len2 = str2.length();
-		//½¨Á¢ÉÏÃæËµµÄÊý×é£¬±È×Ö·û³¤¶È´óÒ»¸ö¿Õ¼ä
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½Ö·ï¿½È´ï¿½Ò»ï¿½ï¿½ï¿½Õ¼ï¿½
 		int[][] dif = new int[len1 + 1][len2 + 1];
-		//¸³³õÖµ£¬²½ÖèB¡£
+		//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Bï¿½ï¿½
 		for (int a = 0; a <= len1; a++) {
 			dif[a][0] = a;
 		}
 		for (int a = 0; a <= len2; a++) {
 			dif[0][a] = a;
 		}
-		//¼ÆËãÁ½¸ö×Ö·ûÊÇ·ñÒ»Ñù£¬¼ÆËã×óÉÏµÄÖµ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Ç·ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Öµ
 		int temp;
 		for (int i = 1; i <= len1; i++) {
 			for (int j = 1; j <= len2; j++) {
@@ -85,15 +85,15 @@ public class StoryListHandler {
 				} else {
 					temp = 1;
 				}
-				//È¡Èý¸öÖµÖÐ×îÐ¡µÄ
+				//È¡ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½
 				dif[i][j] = min(dif[i - 1][j - 1] + temp, dif[i][j - 1] + 1,
 						dif[i - 1][j] + 1);
 			}
 		}
-		System.out.println("×Ö·û´®\""+str1+"\"Óë\""+str2+"\"µÄ±È½Ï");
-		//È¡Êý×éÓÒÏÂ½ÇµÄÖµ£¬Í¬Ñù²»Í¬Î»ÖÃ´ú±í²»Í¬×Ö·û´®µÄ±È½Ï
-		System.out.println("²îÒì²½Öè£º"+dif[len1][len2]);
-		//¼ÆËãÏàËÆ¶È
+		System.out.println("ï¿½Ö·ï¿½\""+str1+"\"ï¿½ï¿½\""+str2+"\"ï¿½Ä±È½ï¿½");
+		//È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½Çµï¿½Öµï¿½ï¿½Í¬ï¿½ï¿½Í¬Î»ï¿½Ã´ï¿½?Í¬ï¿½Ö·ï¿½Ä±È½ï¿½
+		System.out.println("ï¿½ï¿½ï¿½ì²½ï¿½è£º"+dif[len1][len2]);
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
 		float similarity =1 - (float) dif[len1][len2] / Math.max(str1.length(), str2.length());
 		return similarity;
 		
@@ -102,7 +102,7 @@ public class StoryListHandler {
 	
 	
 	/**
-	 * ÔÚËùÓÐ²ÎÊýÖÐµÃµ½×îÐ¡Öµ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ÐµÃµï¿½ï¿½ï¿½Ð¡Öµ
 	 * @param is
 	 * @return
 	 */
@@ -119,7 +119,7 @@ public class StoryListHandler {
 	
 	
 	/**
-	 * ±È½ÏÆ÷
+	 * ï¿½È½ï¿½ï¿½ï¿½
 	 *
 	 */
 	static class MapComparator implements Comparator<Map<String, Object>>{
