@@ -1,9 +1,9 @@
 package model;
 
 public class LearnItemModel {
-	// ÒôÆµÎÄ¼şµÄÍøÂçµØÖ·
+	// éŸ³é¢‘å¯æ’­æ”¾åœ°å€
 	private String mediaUrl;
-	// ÒôÆµÎÄ¼ş¶ÔÓ¦µÄÎÄ×Ö
+	// éŸ³é¢‘å¯¹åº”çš„æ–‡å­—
 	private String mediaText;
 	public String getMediaUrl() {
 		return mediaUrl;

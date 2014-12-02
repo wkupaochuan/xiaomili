@@ -10,11 +10,9 @@ public class BaseActivity extends ActionBarActivity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        //不显示程序的标题栏
-        requestWindowFeature( Window.FEATURE_NO_TITLE );
 
-        //不显示系统的标题栏          
+        // 鍏ㄥ睆璁剧疆
+        requestWindowFeature( Window.FEATURE_NO_TITLE );
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
                               WindowManager.LayoutParams.FLAG_FULLSCREEN );
 	}
