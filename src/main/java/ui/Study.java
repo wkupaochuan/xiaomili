@@ -114,6 +114,7 @@ public class Study extends BaseActivity{
         if(sentenceModel != null)
         {
             String originalSentenceContent = sentenceModel.getMediaText();
+            
 
             // 记录日志
             Log.e(ConstantsCommon.LOG_TAG, "原文:" + originalSentenceContent + "; 识别结果:" + repeatedSentenceContent);
