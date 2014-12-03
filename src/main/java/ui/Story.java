@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import api.ClientCallBack;
 import model.StoryItem;
 
 import org.json.JSONArray;
@@ -16,7 +17,6 @@ import service.story.StoryListHandler;
 
 import constants.ConstantsCommon;
 import api.ApiClent;
-import api.ApiClent.ClientCallback;
 import tools.BaiduVoice;
 
 import com.ai.welcome.R;
@@ -79,23 +79,21 @@ public class Story extends BaseActivity{
 		this.mRecognitionListener = new DialogRecognitionListener(){
 
 			public void onResults(Bundle results){
-			//锟斤拷 Results 锟叫伙拷取 Key 为 DialogRecognitionListener .RESULTS_RECOGNITION 锟斤拷 StringArrayList
-			// ,锟斤拷锟斤拷为锟秸★拷锟斤拷取锟斤拷识锟斤拷锟斤拷锟街达拷锟斤拷锟接︼拷锟揭碉拷锟斤拷呒锟斤拷锟斤拷锟�,锟剿回碉拷锟斤拷锟斤拷锟斤拷锟竭程碉拷锟矫★拷 
+
 				ArrayList<String> rs = (results !=null)? results.getStringArrayList(RESULTS_RECOGNITION):null;
 				
 				if(rs != null && rs.size() > 0){
-					//mDialog.dismiss();
-					//锟剿达拷锟斤拷锟斤拷识锟斤拷锟斤拷,识锟斤拷锟斤拷锟斤拷锟斤拷卸锟斤拷,锟斤拷锟斤拷锟脚度从高碉拷锟斤拷锟斤拷锟斤拷,锟斤拷一锟斤拷元锟斤拷锟斤拷锟斤拷锟脚讹拷锟斤拷叩慕锟斤拷
-					for(String str:rs){
+
+                    for(String str:rs){
 						Log.e("hah", "锟斤拷说锟斤拷锟斤拷:" + str.toString());
 					}
-					
-					// 识锟斤拷锟斤拷希锟斤拷锟斤拷锟斤拷
+
+
 					if(MediaPlayerHandler.getInstance().isPaused()){
 						playOrPauseOnclick(null);
 					}
-					
-					// 锟斤拷锟绞讹拷锟斤拷锟斤拷锟铰癸拷锟斤拷锟叫憋拷
+
+
 					updateStoryListByInputStoryTitle(rs.get(0));
 					
 				}
@@ -286,18 +284,17 @@ public class Story extends BaseActivity{
 			this.playOrPauseOnclick(null);
 		}
 
-        mDialog = BaiduVoice.initBaiduVoiceDialog(this,this.mRecognitionListener);
+        mDialog = BaiduVoice.initBaiduVoiceDialog(this);
 
 		mDialog.show();		
 		
 	}
-	
-
 
 	private void getStoryListFromServer()
 	{
 
-		ApiClent.getStoryList("", new ClientCallback() {
+		ApiClent.getStoryList("", new ClientCallBack() {
+
 			public void  onSuccess(Object data) {
 				
 				String stringRes = data.toString();
@@ -319,8 +316,6 @@ public class Story extends BaseActivity{
 					Story.this.initStoryListView(storyList);
 				} catch (JSONException e) {
 				}
-
-				
 			}
 
 

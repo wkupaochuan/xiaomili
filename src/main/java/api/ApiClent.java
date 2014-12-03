@@ -11,17 +11,12 @@ import constants.ApiURL;
 
 public class ApiClent {
 
-	public interface ClientCallback{
-        abstract void onSuccess(Object data);
-        abstract void onFailure(String message);
-    }
-
 	/**
 	 * 获取故事列表
 	 * @param searchWords
 	 * @param callback
 	 */
-	public static void getStoryList(String searchWords, final ClientCallback callback) {
+	public static void getStoryList(String searchWords, final ClientCallBack callback) {
 		
 		RequestParams params = new RequestParams();
 		params.add("searchWords", searchWords);

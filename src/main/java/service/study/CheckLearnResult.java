@@ -12,12 +12,8 @@ public class CheckLearnResult {
 	
 	private static final float minGrade = (float) 0.5;
 	
-	
-	/**
-	 * ���������
-	 * @param standard				��׼���
-	 * @param repeatedCentence		������
-	 */
+
+
 	public static LetterLearnResult gradeRepeatedCentence(String standard, String repeatedCentence)
 	{
 		int foundedLetterCount = 0;
@@ -61,13 +57,8 @@ public class CheckLearnResult {
 		return res;
 	}
 	
-	
-	/**
-	 * ���ƴ�����
-	 * @param standard
-	 * @param repeatedCentence
-	 * @return
-	 */
+
+
 	private static LetterLearnResult gradeRepeatedCentenceByPinyin(String standard, String repeatedCentence)
 	{
 		List<String> standardPinyin =  XPinYinHelper.getPinyin(standard);

@@ -10,7 +10,6 @@ public class XMediaPlayer {
 	
 	private static  MediaPlayer instance;
 
-
     /**
      * 获取播放器实例
      * @return
@@ -40,6 +39,28 @@ public class XMediaPlayer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    }
+
+    /**
+     * 暂停播放
+     */
+    public static void pause()
+    {
+        MediaPlayer mp = XMediaPlayer.getInstance();
+        if(mp.isPlaying())
+        {
+            mp.pause();
+        }
+    }
+
+
+    /**
+     * 继续播放
+     */
+    public static void goOn()
+    {
+        MediaPlayer mp = XMediaPlayer.getInstance();
+
     }
 
 }
