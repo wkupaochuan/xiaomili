@@ -41,6 +41,8 @@ public class XMediaPlayer {
 		}
     }
 
+
+
     /**
      * 暂停播放
      */

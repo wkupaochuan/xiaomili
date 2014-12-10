@@ -1,26 +1,27 @@
 package ui;
 
-import java.util.ArrayList;
-
-import model.study.ClassSentenceModel;
-import model.LetterLearnResult;
-
-import service.study.CheckLearnResult;
-import service.study.StudyService;
-import tools.XMediaPlayer;
-
-import tools.BaiduVoice;
-import com.ai.welcome.R;
-import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
-import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
-
-import constants.ConstantsCommon;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.ai.welcome.R;
+import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
+import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
+
+import java.util.ArrayList;
+
+import constants.ConstantsCommon;
+import model.LetterLearnResult;
+import model.study.ClassSentenceModel;
+import service.study.CheckLearnResult;
+import service.study.StudyService;
+import tools.BaiduVoice;
+import tools.XMediaPlayer;
 
 
 /**
@@ -46,16 +47,16 @@ public class Study extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_home);
-        
+
         // 设置百度语音回调
         this.initBiduVoiceRecgnitionListener();
 
         // 设置播放器播放完毕回调
         setOnMediaPlayerCompletionListener();
-        
+
         // 初始化layout
         this.sentencesSectionLayout = (LinearLayout) this.findViewById(R.id.text_line);
-        
+
         // 播放
         this.playNext();
     }
@@ -114,7 +115,7 @@ public class Study extends BaseActivity{
         if(sentenceModel != null)
         {
             String originalSentenceContent = sentenceModel.getMediaText();
-            
+
 
             // 记录日志
             Log.e(ConstantsCommon.LOG_TAG, "原文:" + originalSentenceContent + "; 识别结果:" + repeatedSentenceContent);
@@ -134,6 +135,7 @@ public class Study extends BaseActivity{
             if(learnResult.getGrade() < 0.5)
             {
                 // todo
+                this.replay();
             }
             else{
                 // 播放下一首
@@ -166,6 +168,30 @@ public class Study extends BaseActivity{
         }
     }
 
+    /**
+     * 重新播放当前句子
+     */
+    public void replay()
+    {
+        SoundPool  pool = new SoundPool(5, AudioManager.STREAM_SYSTEM, 0);
+        int sourceid = pool.load(this, R.raw.replay_tip, 1);//载入音频流，返回在池中的id
+        pool.play(sourceid, 1, 1, 1, 0, 1f);
+
+        ClassSentenceModel sentenceModel = this.studyService.getLearningSentence();
+        if(sentenceModel != null)
+        {
+            int sentenceId = sentenceModel.getSentenceId();
+            String sentenceContent = sentenceModel.getMediaText();
+            String sentenceUrl = sentenceModel.getMediaUrl();
+
+            // 显示文字
+            this.showSentence(sentenceContent, sentenceId);
+
+            // 播放音频
+            XMediaPlayer.play(sentenceUrl);
+        }
+    }
+
 
     /**
      * 显示语句
@@ -180,7 +206,6 @@ public class Study extends BaseActivity{
             tx.setId(viewId);
             tx.setTextSize(30);
             this.sentencesSectionLayout.addView(tx);
-
         }
         else{
 

@@ -6,58 +6,22 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/listbg"
     tools:context="ui.Welcome" >
 
-	    <ListView
-	        android:id="@+id/lv_music_list"
-	        android:layout_width="wrap_content"
-	        android:layout_height="380dp"
-	        android:layout_marginTop="20dp">
-	    </ListView>
-	    
-	    
-	    <LinearLayout
-	        	android:id="@+id/ly_story_buttons"
-			  	android:layout_width="fill_parent"
-			  	android:layout_height="wrap_content"
-			  	android:orientation="horizontal"
-			  	android:gravity="center_horizontal"
-			  	android:layout_marginTop="15dp"
-			  	android:layout_below="@id/lv_music_list"
-			  	>
-		   <ImageButton
-		  		android:id="@+id/btn_foward_story"
-		  		android:layout_width="wrap_content"
-		  		android:layout_height="wrap_content"
-		  		android:layout_gravity="center_vertical"
-		  		android:scaleType="fitCenter"
-		  		android:layout_marginRight="90dip"
-		  		android:background="@drawable/forward_selecor"
-		  		android:onClick="playForwardStoryOnClick"
-		  		/>
-		   <ImageButton
-		  		android:id="@+id/btn_play_or_pause"
-		  		android:layout_width="wrap_content"
-		  		android:layout_height="wrap_content"
-		  		android:layout_gravity="center_vertical"
-		  		android:onClick="playOrPauseOnclick"
-		  		android:scaleType="fitCenter" 
-		  		android:background="@drawable/play_selecor"
-		  		/>
-		  	<ImageButton
-		  		android:id="@+id/btn_next_story"
-		  		android:layout_width="wrap_content"
-		  		android:layout_height="wrap_content"
-		  		android:layout_gravity="center_vertical"
-		  		android:scaleType="fitCenter"
-		  		android:layout_marginLeft="90dip"
-		  		android:background="@drawable/next_selecor"
-		  		android:onClick="playNextOnclick"
-		  		/>
-			 
-		</LinearLayout>
-		
+        <GridView
+            android:layout_width="fill_parent"
+            android:layout_height="480dp"
+            android:layout_marginTop="20dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:columnWidth="90dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:id="@+id/story_list_grid"
+            >
+
+        </GridView>
 
 	    <LinearLayout
 	        android:id="@+id/test"
@@ -66,7 +30,7 @@
 			  	android:orientation="horizontal"
 			  	android:gravity="center_horizontal"
 			  	android:layout_marginTop="25dp"
-			  	android:layout_below="@id/ly_story_buttons"
+			  	android:layout_below="@id/story_list_grid"
 			  	>
 		   <ImageButton
 		  		android:id="@+id/btn_baidu_voice"
@@ -77,39 +41,5 @@
 		  		android:scaleType="fitCenter" 
 		  		android:background="@drawable/microphone"
 		  		/>
-		   
-		   <!-- 
-		   <ImageButton
-		  		android:id="@+id/btn_search_similar_story"
-		  		android:layout_width="wrap_content"
-		  		android:layout_height="wrap_content"
-		  		android:layout_gravity="center_vertical"
-		  		android:onClick="searchSimilarStory"
-		  		android:scaleType="fitCenter" 
-		  		android:background="@drawable/play_selecor"
-		  		/>
-		    -->
-			 
 		</LinearLayout>
-		
-	    <!-- 
-	    <LinearLayout
-			  	android:layout_width="fill_parent"
-			  	android:layout_height="wrap_content"
-			  	android:orientation="horizontal"
-			  	android:gravity="center_horizontal"
-			  	android:layout_below="@id/test"
-			  	>
-		<EditText
-		    android:layout_width="fill_parent"
-			  	android:layout_height="wrap_content"
-			  	android:id="@+id/et_story_title"
-		    />
-			 
-		</LinearLayout>
-		
-	     -->
-
-
-        
 </RelativeLayout>

@@ -1,10 +1,14 @@
 package ui;
 
 
-import com.ai.welcome.R;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
+
+import com.ai.welcome.R;
 
 
 public class Welcome extends BaseActivity {
@@ -16,6 +20,18 @@ public class Welcome extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+
+        String DeviceId = Settings.Secure.getString(
+                this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        Log.e("xxx唯一id", DeviceId);
+
+        String Imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
+                .getDeviceId();
+
+        Log.e("imei", DeviceId);
+
     }
 
 

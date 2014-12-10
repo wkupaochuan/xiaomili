@@ -3,11 +3,12 @@ package api;
 import android.content.Context;
 import android.util.Log;
 
-import constants.ApiURL;
-import constants.ConstantsCommon;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import constants.ApiURL;
+import constants.ConstantsCommon;
 
 
 /**
@@ -47,7 +48,7 @@ public class RestClient {
      */
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)
     {
-        Log.e(ConstantsCommon.LOG_TAG, url);
+        Log.e(ConstantsCommon.LOG_TAG, getAbsoluteUrl(url));
         RestClient.client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 

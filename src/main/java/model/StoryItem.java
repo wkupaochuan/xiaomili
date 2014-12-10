@@ -1,38 +1,31 @@
 package model;
 
-/**
- * ������Ŀ
- * 1-- �������һ������
- * @author Gain
- */
 
 public class StoryItem {
-	
-	// ���µı���
+
+    // 故事名称
 	private String title;
 	
-	// ���´�ŵĵ�ַ(�����Ǳ��ص�ַ������Ҳ������������õ�ַ)
+	// 故事播放地址
 	private String location;
-	
-	/**
-	 * ������췽��(ֱ��set��������, ���Ƽ�)
-	 * @param title
-	 * @param location
-	 */
+
+    /**
+     * 构造方法
+     * @param title
+     * @param location
+     */
 	public StoryItem(String title, String location){
 		this.title = title;
 		this.location = location;
 	}
-	
-	/**
-	 * �޲����췽��(ʵ��������set����)
-	 */
+
+
 	public StoryItem(){
 		
 	}
 
 
-/*******************************˽�����Ե�get & set ����************************************************/
+
 	public String getTitle() {
 		return title;
 	}
@@ -45,30 +38,8 @@ public class StoryItem {
 		return location;
 	}
 
-	/**
-	 * ���ù��´�ŵ�ַ
-	 * @param location
-	 */
 	public void setLocation(String location) {
-		// У���ַ����Ч��
-		if(this.isLegalLocation(location)){
-			this.location = location;
-		}
-		else{
-		}
+        this.location = location;
 	}
-	
-
-
-	private boolean isLegalLocation(String location){
-		boolean result = true;
-//		File testFile = new File(location);
-//		if(!testFile.exists()){
-//			result = false;
-//		}
-		return result;
-	}
-	
-	
 
 }
