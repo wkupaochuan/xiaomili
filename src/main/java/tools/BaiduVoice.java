@@ -5,14 +5,12 @@ import android.os.Bundle;
 
 import com.baidu.voicerecognition.android.VoiceRecognitionConfig;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
-import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 
 public class BaiduVoice {
 
     /**
      * 获取一个百度语音识别窗口
      * @param view
-     * @param mRecognitionListener
      * @return
      */
 	public static BaiduASRDigitalDialog  initBaiduVoiceDialog(Context view)

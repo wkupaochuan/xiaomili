@@ -15,8 +15,56 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:layout_marginTop="25dp"
-        android:layout_below="@id/story_list_grid"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="279dp"
+            android:id="@+id/imageView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/story_tab" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_story_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/ly_image"
         >
+        <ImageButton
+            android:id="@+id/btn_foward_story"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="90dip"
+            android:background="@drawable/forward_selecor"
+            android:onClick="playForwardStoryOnClick"
+            />
+        <ImageButton
+            android:id="@+id/btn_play_or_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:onClick="playOrPauseOnclick"
+            android:scaleType="fitCenter"
+            android:background="@drawable/play_selecor"
+            />
+        <ImageButton
+            android:id="@+id/btn_next_story"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="90dip"
+            android:background="@drawable/next_selecor"
+            android:onClick="playNextOnclick"
+            />
 
     </LinearLayout>
 
@@ -27,10 +75,10 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:layout_marginTop="25dp"
-        android:layout_below="@id/story_list_grid"
+        android:layout_below="@id/ly_story_buttons"
         >
         <ImageButton
-            android:id="@+id/ly_imagde"
+            android:id="@+id/btn_baidu_voice"
             android:layout_width="50dip"
             android:layout_height="70dip"
             android:layout_gravity="center_vertical"
@@ -39,4 +87,6 @@
             android:background="@drawable/microphone"
             />
     </LinearLayout>
+
+
 </RelativeLayout>

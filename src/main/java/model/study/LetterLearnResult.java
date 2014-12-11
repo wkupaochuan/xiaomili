@@ -1,5 +1,5 @@
 
-package model;
+package model.study;
 
 
 import java.util.Map;

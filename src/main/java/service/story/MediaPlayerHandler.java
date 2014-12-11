@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.StoryItem;
+import model.story.StoryItem;
 
 
 public class MediaPlayerHandler {

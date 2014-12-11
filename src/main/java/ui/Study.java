@@ -16,7 +16,7 @@ import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 import java.util.ArrayList;
 
 import constants.ConstantsCommon;
-import model.LetterLearnResult;
+import model.study.LetterLearnResult;
 import model.study.ClassSentenceModel;
 import service.study.CheckLearnResult;
 import service.study.StudyService;

@@ -6,40 +6,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ui.Welcome" >
+    >
 
-        <GridView
-            android:layout_width="fill_parent"
-            android:layout_height="480dp"
-            android:layout_marginTop="20dp"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:columnWidth="90dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"
-            android:id="@+id/story_list_grid"
-            >
-
-        </GridView>
-
-	    <LinearLayout
-	        android:id="@+id/test"
-			  	android:layout_width="fill_parent"
-			  	android:layout_height="wrap_content"
-			  	android:orientation="horizontal"
-			  	android:gravity="center_horizontal"
-			  	android:layout_marginTop="25dp"
-			  	android:layout_below="@id/story_list_grid"
-			  	>
-		   <ImageButton
-		  		android:id="@+id/btn_baidu_voice"
-		  		android:layout_width="50dip"
-		  		android:layout_height="70dip"
-		  		android:layout_gravity="center_vertical"
-		  		android:onClick="invokeBaiduVoice"
-		  		android:scaleType="fitCenter" 
-		  		android:background="@drawable/microphone"
-		  		/>
-		</LinearLayout>
+    <FrameLayout
+        android:id="@+id/id_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
 </RelativeLayout>

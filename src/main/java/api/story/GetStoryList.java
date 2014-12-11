@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import api.ClientCallBack;
 import api.RestClient;
 import constants.ApiURL;
-import model.StoryItem;
+import model.story.StoryItem;
 
 
 public class GetStoryList {
@@ -54,7 +54,7 @@ public class GetStoryList {
              */
             public void onFailure(int statusCode, Header[] headers,
                                   byte[] responseBody, Throwable error) {
-                callback.onFailure(responseBody.toString());
+                callback.onFailure(new String(responseBody));
             }
         });
 	}

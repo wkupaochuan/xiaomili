@@ -6,7 +6,7 @@ import java.util.Map;
 
 import tools.XPinYinHelper;
 
-import model.LetterLearnResult;
+import model.study.LetterLearnResult;
 
 public class CheckLearnResult {
 	
