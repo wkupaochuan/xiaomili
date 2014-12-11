@@ -9,12 +9,40 @@
     tools:context="ui.Welcome" >
 
     <LinearLayout
-        android:id="@+id/ly_image"
+        android:id="@+id/ly_story_tile"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:layout_marginTop="25dp"
+        >
+        <TextView
+            android:id="@+id/text_view_story_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="90dip"
+            />
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:background="@drawable/close_playing_story"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ly_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/ly_story_tile"
         android:weightSum="1">
 
         <ImageView
@@ -23,8 +51,7 @@
             android:id="@+id/imageView"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/story_tab" />
-
+            android:src="@drawable/welcome_story_tab" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,26 +93,6 @@
             android:onClick="playNextOnclick"
             />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/test"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_below="@id/ly_story_buttons"
-        >
-        <ImageButton
-            android:id="@+id/btn_baidu_voice"
-            android:layout_width="50dip"
-            android:layout_height="70dip"
-            android:layout_gravity="center_vertical"
-            android:onClick="invokeBaiduVoice"
-            android:scaleType="fitCenter"
-            android:background="@drawable/microphone"
-            />
     </LinearLayout>
 
 

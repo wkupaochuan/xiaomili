@@ -1,8 +1,6 @@
 package ui;
 
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -16,8 +14,8 @@ import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 import java.util.ArrayList;
 
 import constants.ConstantsCommon;
-import model.study.LetterLearnResult;
 import model.study.ClassSentenceModel;
+import model.study.LetterLearnResult;
 import service.study.CheckLearnResult;
 import service.study.StudyService;
 import tools.BaiduVoice;
@@ -173,9 +171,9 @@ public class Study extends BaseActivity{
      */
     public void replay()
     {
-        SoundPool  pool = new SoundPool(5, AudioManager.STREAM_SYSTEM, 0);
-        int sourceid = pool.load(this, R.raw.replay_tip, 1);//载入音频流，返回在池中的id
-        pool.play(sourceid, 1, 1, 1, 0, 1f);
+//        SoundPool  pool = new SoundPool(5, AudioManager.STREAM_SYSTEM, 0);
+//        int sourceid = pool.load(this, R.raw.replay_tip, 1);//载入音频流，返回在池中的id
+//        pool.play(sourceid, 1, 1, 1, 0, 1f);
 
         ClassSentenceModel sentenceModel = this.studyService.getLearningSentence();
         if(sentenceModel != null)
@@ -219,7 +217,6 @@ public class Study extends BaseActivity{
 	 */
 	private void setOnMediaPlayerCompletionListener(){
 		XMediaPlayer.getInstance().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
             public void onCompletion(MediaPlayer arg0) {
                 invokeBaiduVoiceDialog();
             }

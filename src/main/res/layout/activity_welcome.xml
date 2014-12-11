@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#f98221"
     tools:context="ui.Welcome" >
 
     <ImageButton
@@ -13,11 +14,13 @@
         android:layout_width="147dp"
         android:layout_height="220dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:onClick="storyTabOnClick"
-        android:src="@drawable/story_tab"
+        android:background="@drawable/welcome_story_tab_sector"
         />
 
     <ImageButton
@@ -26,7 +29,7 @@
         android:layout_height="220dp"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/btn_story_tab"
-        android:src="@drawable/learn_tab"
+        android:background="@drawable/welcome_study_tab_sector"
         android:onClick="studyTabOnClick"
         
         android:layout_marginRight="0dp" />
@@ -37,7 +40,8 @@
         android:layout_height="220dp"
         android:layout_alignLeft="@+id/btn_story_tab"
         android:layout_below="@+id/btn_story_tab"
-        android:src="@android:drawable/alert_dark_frame" />
+        android:background="@drawable/welcome_wechat_tab_sector"
+        />
 
     <ImageButton
         android:id="@+id/btn_showdown_tab"
@@ -45,6 +49,7 @@
         android:layout_height="220dp"
         android:layout_alignLeft="@+id/btn_study_tab"
         android:layout_alignTop="@+id/btn_im_tab"
-        android:src="@android:drawable/alert_dark_frame" />
+        android:background="@drawable/welcome_shutdown_tab_sector"
+        />
 
 </RelativeLayout>

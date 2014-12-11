@@ -124,7 +124,7 @@ public class StoryListFragment extends BaseFragment{
         {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("story_tile", storyItem.getTitle());
-            map.put("story_image", R.drawable.story_tab);
+            map.put("story_image", R.drawable.welcome_story_tab);
             listMap.add(map);
         }
 

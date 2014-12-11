@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/story_image"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/story_tab"
+        android:src="@drawable/welcome_story_tab"
         />
 
     <TextView
