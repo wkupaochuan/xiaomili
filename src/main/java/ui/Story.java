@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import constants.ConstantsCommon;
 import model.story.StoryItem;
 
-public class Story extends BaseActivity implements StoryListFragment.StoryItemOnClickListener{
+public class Story extends BaseActivity implements StoryListFragment.StoryItemOnClickListener, PlayingStoryFragment.ClosePlayingStoryOnClickListener{
 
     // 故事列表
     ArrayList<StoryItem> storyItemsList;
@@ -32,6 +32,8 @@ public class Story extends BaseActivity implements StoryListFragment.StoryItemOn
 
 
 
+
+
     /**
      * 初始化
      */
@@ -44,6 +46,9 @@ public class Story extends BaseActivity implements StoryListFragment.StoryItemOn
         this.storyItemsList = this.storyListFragment.storyList;
     }
 
+    /**
+     * 设置默认视图
+     */
     private void setDefaultFragment()
     {
         FragmentManager fm = getFragmentManager();
@@ -54,7 +59,10 @@ public class Story extends BaseActivity implements StoryListFragment.StoryItemOn
     }
 
 
-
+    /**
+     * 故事列表点击事件
+     * @param position
+     */
     public void onItemClick(int position){
         Log.e(ConstantsCommon.LOG_TAG, "被点击:" + position);
         FragmentManager fm = getFragmentManager();
@@ -65,6 +73,18 @@ public class Story extends BaseActivity implements StoryListFragment.StoryItemOn
         this.playingStoryFragment.updateStoryList(this.storyListFragment.storyList, position);
     }
 
+
+    /**
+     * 关闭正在播放的故事页面
+     */
+    public void ClosePlayingStoryOnClick()
+    {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        this.storyListFragment = new StoryListFragment();
+        transaction.replace(R.id.id_content, this.storyListFragment);
+        transaction.commit();
+    }
 
 
 }

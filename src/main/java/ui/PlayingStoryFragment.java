@@ -1,12 +1,14 @@
 package ui;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ai.welcome.R;
@@ -31,6 +33,8 @@ public class PlayingStoryFragment extends BaseFragment{
     // 播放状态(-1:初始状态, 0:停止状态, 1:播放状态, 2:暂停状态)
     private int playIngStatus = -1;
 
+    private ClosePlayingStoryOnClickListener closeOnClickListener;
+
 
     // 播放控制按钮
     private ImageButton btnFoward;
@@ -38,6 +42,12 @@ public class PlayingStoryFragment extends BaseFragment{
     private ImageButton btnNext;
 
     private ImageButton btnPlayOrPause;
+
+    // 关闭按钮
+    private ImageButton btnClose;
+
+    // 标题
+    private TextView tvStoryTitle;
 
     /**
      * 页面被创建时触发
@@ -62,6 +72,14 @@ public class PlayingStoryFragment extends BaseFragment{
         this.play(this.activeItemNum);
     }
 
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        try{
+            this.closeOnClickListener = (ClosePlayingStoryOnClickListener)activity;
+        }catch(ClassCastException e){
+            throw new ClassCastException(activity.toString()+"must implement OnArticleSelectedListener");
+        }
+    }
 
     // 初始化方法
     private void init()
@@ -86,6 +104,16 @@ public class PlayingStoryFragment extends BaseFragment{
                 PlayingStoryFragment.this.btnPlayOrPauseOnClick();
             }
         });
+
+        this.btnClose = (ImageButton)this.view.findViewById(R.id.btn_close);
+        this.btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeOnClickListener.ClosePlayingStoryOnClick();
+            }
+        });
+
+        this.tvStoryTitle = (TextView) this.view.findViewById(R.id.text_view_story_title);
     }
 
 
@@ -115,6 +143,7 @@ public class PlayingStoryFragment extends BaseFragment{
         }
         this.play(this.activeItemNum);
     }
+
 
 
 
@@ -151,6 +180,7 @@ public class PlayingStoryFragment extends BaseFragment{
      */
     public void play(int position)
     {
+        // 设置播放按钮
         this.btnPlayOrPause.setBackgroundResource(R.drawable.pause_selecor);
         Log.e(ConstantsCommon.LOG_TAG, "播放故事编号:" + position);
         if(position >= 0 && position < this.storyItemsList.size())
@@ -159,6 +189,9 @@ public class PlayingStoryFragment extends BaseFragment{
             this.activeItemNum = position;
             String storyPath = this.storyItemsList.get(position).getLocation();
             storyPath = "http://toy-admin.wkupaochuan.com" + storyPath;
+            // 设置标题
+            String storyTile = this.storyItemsList.get(position).getTitle();
+            this.tvStoryTitle.setText(storyTile);
             Log.e(ConstantsCommon.LOG_TAG, "播放故事地址:" + storyPath);
             XMediaPlayer.play(storyPath);
         }
@@ -178,6 +211,10 @@ public class PlayingStoryFragment extends BaseFragment{
         XMediaPlayer.pause();
     }
 
+
+    public interface ClosePlayingStoryOnClickListener{
+        public void ClosePlayingStoryOnClick();
+    }
 
 
 
