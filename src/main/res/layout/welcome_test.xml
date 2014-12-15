@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f98221"
+    >
+
+
+    #第一排按钮#
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        #听故事按钮#
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="storyTabOnClick"
+            >
+
+            <ImageView
+                android:layout_marginStart="77dp"
+                android:layout_marginTop="146dp"
+                android:background="@drawable/welcome_story_tab_sector"
+                android:layout_width="87dp"
+                android:layout_height="127dp"
+                />
+
+            <ImageView
+                android:layout_marginStart="76dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/welcome_story_tab_text"
+                android:layout_width="87dp"
+                android:layout_height="28dp"
+                />
+
+        </LinearLayout>
+
+        #竖直分割线#
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#fb9441"
+            />
+
+
+        #学习按钮#
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="studyTabOnClick"
+            >
+
+            <ImageView
+                android:layout_marginStart="68dp"
+                android:layout_marginTop="160dp"
+                android:background="@drawable/welcome_study_tab_sector"
+                android:layout_width="102dp"
+                android:layout_height="99dp"
+                />
+
+            <ImageView
+                android:layout_marginStart="90dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/welcome_study_text"
+                android:layout_width="57dp"
+                android:layout_height="28dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    ##水平分割线#
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#fb9441"
+        />
+
+
+    #第二排按钮#
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        #互动按钮#
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <ImageView
+                android:layout_marginStart="53dp"
+                android:layout_marginTop="72dp"
+                android:background="@drawable/welcome_wechat_tab_sector"
+                android:layout_width="132dp"
+                android:layout_height="108dp"
+                />
+
+            <ImageView
+                android:layout_marginStart="60dp"
+                android:layout_marginBottom="100dp"
+                android:src="@drawable/welcome_wechat_text"
+                android:layout_width="119dp"
+                android:layout_height="28dp"
+                />
+
+        </LinearLayout>
+
+        #竖直分割线#
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#fb9441"
+            />
+
+
+        #关机按钮#
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="73dp"
+                android:background="@drawable/welcome_shutdown_tab_sector"
+                android:layout_width="108dp"
+                android:layout_height="107dp"
+                />
+
+            <ImageView
+                android:layout_marginStart="91dp"
+                android:layout_marginBottom="100dp"
+                android:src="@drawable/welcome_shutdown_text"
+                android:layout_width="58dp"
+                android:layout_height="28dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

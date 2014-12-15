@@ -9,6 +9,8 @@
     android:background="#f98221"
     tools:context="ui.Welcome" >
 
+
+
     <ImageButton
         android:id="@+id/btn_story_tab"
         android:layout_width="147dp"

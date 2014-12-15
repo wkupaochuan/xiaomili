@@ -16,7 +16,8 @@ public class Welcome extends BaseActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+//        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.welcome_test);
 
 //
 //        String DeviceId = Settings.Secure.getString(
