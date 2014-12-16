@@ -5,18 +5,19 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="101dp"
+        android:layout_height="101dp"
         android:id="@+id/story_image"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/welcome_story_tab"
+        android:background="@drawable/story_list_grid_border"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:textSize="16dp"
         android:singleLine="true"
         android:id="@+id/story_tile"
         android:ellipsize="end"
