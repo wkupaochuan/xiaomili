@@ -2,34 +2,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:background="#fdf9e4"
     tools:context="ui.Welcome" >
 
     <LinearLayout
         android:id="@+id/ly_story_tile"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
         android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:background="#f98221"
         >
-        <TextView
-            android:id="@+id/text_view_story_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_weight="7"
-            android:text="我是来测试长度的看看这里有多长"
-            />
-        <ImageButton
+
+        <ImageView
             android:id="@+id/btn_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/close_playing_story"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/back_button"
+            android:layout_width="78dp"
+            android:layout_height="35dp"
+            />
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="5dp"
+            android:text="听故事"
+            android:textColor="#fdf9e4"
+            android:textSize="34dp"
             />
     </LinearLayout>
 
@@ -37,27 +43,39 @@
         android:id="@+id/ly_image"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:orientation="vertical"
         android:layout_below="@id/ly_story_tile"
-        android:weightSum="1">
+        >
 
         <ImageView
+            android:layout_width="365dp"
+            android:layout_height="365dp"
+            android:id="@+id/image_view_story_cover"
+            android:src="@drawable/default_story_cover"
+            />
+
+        <TextView
+            android:id="@+id/text_view_story_title"
             android:layout_width="match_parent"
-            android:layout_height="279dp"
-            android:id="@+id/imageView"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/welcome_story_tab" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="start|center_vertical"
+            android:text="爱我你就抱抱我"
+            android:textSize="30sp"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ly_story_buttons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:layout_marginTop="15dp"
+
         android:layout_below="@id/ly_image"
         >
         <ImageButton

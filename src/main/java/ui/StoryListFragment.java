@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ai.welcome.R;
@@ -84,9 +85,14 @@ public class StoryListFragment extends BaseFragment{
             }
         });
 
-
-        // 设置点击返回主页事件
-
+        // 设置返回主页点击事件
+        ImageView backImageView = (ImageView)this.view.findViewById(R.id.backImage);
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.backToWelcomePageOnClick();
+            }
+        });
     }
 
 
@@ -151,16 +157,6 @@ public class StoryListFragment extends BaseFragment{
 
         // 返回主页
         public void backToWelcomePageOnClick();
-    }
-
-
-    /**
-     * 返回主页点击事件
-     * @param view
-     */
-    public void backToWelcomePage(View view)
-    {
-        mListener.backToWelcomePageOnClick();
     }
 
 

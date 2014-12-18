@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,10 @@ public class PlayingStoryFragment extends BaseFragment{
     private ImageButton btnPlayOrPause;
 
     // 关闭按钮
-    private ImageButton btnClose;
+    private ImageView imageViewClose;
+
+    // 故事封面
+    private ImageView imageViewStoryCover;
 
     // 标题
     private TextView tvStoryTitle;
@@ -105,14 +109,18 @@ public class PlayingStoryFragment extends BaseFragment{
             }
         });
 
-        this.btnClose = (ImageButton)this.view.findViewById(R.id.btn_close);
-        this.btnClose.setOnClickListener(new View.OnClickListener() {
+        this.imageViewClose = (ImageView)this.view.findViewById(R.id.btn_close);
+        this.imageViewClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeOnClickListener.ClosePlayingStoryOnClick();
             }
         });
 
+        // 初始化故事封面ImageView
+        this.imageViewStoryCover = (ImageView) this.view.findViewById(R.id.image_view_story_cover);
+
+        // 初始化
         this.tvStoryTitle = (TextView) this.view.findViewById(R.id.text_view_story_title);
     }
 
@@ -189,9 +197,15 @@ public class PlayingStoryFragment extends BaseFragment{
             this.activeItemNum = position;
             String storyPath = this.storyItemsList.get(position).getLocation();
             storyPath = "http://toy-admin.wkupaochuan.com" + storyPath;
+
             // 设置标题
             String storyTile = this.storyItemsList.get(position).getTitle();
             this.tvStoryTitle.setText(storyTile);
+
+            // 设置故事封面
+
+
+            // 播放故事
             Log.e(ConstantsCommon.LOG_TAG, "播放故事地址:" + storyPath);
             XMediaPlayer.play(storyPath);
         }
