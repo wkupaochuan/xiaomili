@@ -19,33 +19,45 @@
         android:background="#f98221"
         >
 
-        <ImageView
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="13dp"
-            android:background="@drawable/back"
-            android:layout_width="20dp"
-            android:layout_height="35dp"
-            />
-
-        <TextView
-            android:layout_marginStart="10dp"
-            android:layout_gravity="center_vertical"
-            android:text="返回"
-            android:textColor="#fdf9e4"
-            android:textSize="24dp"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:orientation="horizontal"
+            android:id="@+id/backToWelcomePageBar"
+            >
+
+            <ImageView
+                android:id="@+id/backImage"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/back"
+                android:layout_width="20dp"
+                android:layout_height="35dp"
+                android:onClick="backToWelcomePage"
+                />
+
+            <TextView
+                android:id="@+id/backText"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:text="返回"
+                android:textColor="#fdf9e4"
+                android:textSize="24dp"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:onClick="backToWelcomePage"
+                />
+
+        </LinearLayout>
 
 
         <TextView
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="140dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="听故事"
             android:textColor="#fdf9e4"
             android:textSize="34dp"
-            android:layout_width="103dp"
-            android:layout_height="match_parent"
             />
 
 

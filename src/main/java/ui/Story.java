@@ -2,6 +2,7 @@ package ui;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -28,10 +29,6 @@ public class Story extends BaseActivity implements StoryListFragment.StoryItemOn
         // 初始化
         this.init();
     }
-
-
-
-
 
 
     /**
@@ -71,6 +68,14 @@ public class Story extends BaseActivity implements StoryListFragment.StoryItemOn
         transaction.replace(R.id.id_content, this.playingStoryFragment);
         transaction.commit();
         this.playingStoryFragment.updateStoryList(this.storyListFragment.storyList, position);
+    }
+
+
+
+    public void backToWelcomePageOnClick()
+    {
+        Intent intent = new Intent(this, Welcome.class);
+        startActivity(intent);
     }
 
 

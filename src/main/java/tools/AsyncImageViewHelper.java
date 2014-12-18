@@ -71,6 +71,8 @@ public class AsyncImageViewHelper extends AsyncTask<String, Integer, Bitmap> {
     {
         if(imageView!=null && result!=null)
         {
+            // 设置图片自适应
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setImageBitmap(result);
         }
 
