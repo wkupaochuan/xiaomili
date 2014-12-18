@@ -1,6 +1,8 @@
 package ui;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,20 +12,24 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.ai.welcome.R;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
 import com.baidu.voicerecognition.android.ui.DialogRecognitionListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import api.ClientCallBack;
 import api.story.GetStoryList;
 import constants.ConstantsCommon;
 import model.story.StoryItem;
+import service.story.StoryGridViewAdapter;
 import tools.BaiduVoice;
 
 public class StoryListFragment extends BaseFragment{
@@ -119,28 +125,96 @@ public class StoryListFragment extends BaseFragment{
     private void updateStoryGridView(ArrayList<StoryItem> storyList){
     	this.storyList = storyList;
 
-        ArrayList<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
-        for(StoryItem storyItem:this.storyList)
-        {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("story_tile", storyItem.getTitle());
-            map.put("story_image",  R.drawable.story_cover_test);
-//            map.put("story_image", R.drawable.welcome_story_tab);
-            listMap.add(map);
-        }
+        StoryGridViewAdapter adapter = new StoryGridViewAdapter(R.layout.story_tab, getActivity(), storyList);
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(
-                getActivity()
-                , listMap
-                , R.layout.story_tab
-                , new String[] {"story_tile", "story_image"}
-                , new int[]{R.id.story_tile, R.id.story_image}
-        );
-
-        this.gvStoryList.setAdapter(simpleAdapter);
+        this.gvStoryList.setAdapter(adapter);
 
         this.setStoryOnclickEvent();
     }
+
+    /**
+     * 获取网落图片资源
+     * @param imageUrl
+     * @return
+     */
+    public Bitmap getHttpBitmap(String imageUrl){
+        try {
+            byte[] byteData = getImageByte(imageUrl);
+            int len = byteData.length;
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+            options.inPurgeable = true;
+            options.inInputShareable = true;
+            options.inJustDecodeBounds = false;
+            if (len > 200000) {// 大于200K的进行压缩处理
+                options.inSampleSize = 2;
+            }
+
+            return BitmapFactory.decodeByteArray(byteData, 0, len);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(ConstantsCommon.LOG_TAG, "图片下载失败，异常信息是：" + e.toString());
+            return null;
+        }
+    }
+
+
+
+    private  byte[] getImageByte(String urlPath) {
+        InputStream in = null;
+        byte[] result = null;
+        try {
+            URL url = new URL(urlPath);
+            HttpURLConnection httpURLconnection = (HttpURLConnection) url
+                    .openConnection();
+            httpURLconnection.setDoInput(true);
+            httpURLconnection.connect();
+            if (httpURLconnection.getResponseCode() == 200) {
+                in = httpURLconnection.getInputStream();
+                result = readInputStream(in);
+                in.close();
+            } else {
+                Log
+                        .e(ConstantsCommon.LOG_TAG, "下载图片失败，状态码是："
+                                + httpURLconnection.getResponseCode());
+            }
+        } catch (Exception e) {
+            Log.e(ConstantsCommon.LOG_TAG, "下载图片失败，原因是：" + e.toString());
+            e.printStackTrace();
+        } finally {
+            Log.e(ConstantsCommon.LOG_TAG, "下载图片失败!");
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 将输入流转为byte数组
+     *
+     * @param in
+     * @return
+     * @throws Exception
+     */
+    private  byte[] readInputStream(InputStream in) throws Exception {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len = -1;
+        while ((len = in.read(buffer)) != -1) {
+            baos.write(buffer, 0, len);
+        }
+        baos.close();
+        in.close();
+        return baos.toByteArray();
+    }
+
 
     /**
      * 设置故事列表点击事件

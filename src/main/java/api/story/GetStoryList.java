@@ -76,7 +76,13 @@ public class GetStoryList {
                 JSONObject obj = jsonArrayRes.getJSONObject(i);
                 storyItem.setTitle(obj.getString("name"));
                 String path = obj.getString("path");
+                String storyCover = obj.getString("story_cover_path");
+                if(!storyCover.equals(""))
+                {
+                    storyCover = "http://toy-admin.wkupaochuan.com" + storyCover;
+                }
                 storyItem.setLocation(path);
+                storyItem.setStoryCover(storyCover);
 
                 storyList.add(storyItem);
             }

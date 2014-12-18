@@ -5,6 +5,9 @@ public class StoryItem {
 
     // 故事名称
 	private String title;
+
+    // 故事封面
+    private String storyCover;
 	
 	// 故事播放地址
 	private String location;
@@ -24,9 +27,15 @@ public class StoryItem {
 		
 	}
 
+    public String getStoryCover() {
+        return storyCover;
+    }
 
+    public void setStoryCover(String storyCover) {
+        this.storyCover = storyCover;
+    }
 
-	public String getTitle() {
+    public String getTitle() {
 		return title;
 	}
 
