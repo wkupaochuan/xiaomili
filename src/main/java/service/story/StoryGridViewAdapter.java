@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import constants.ConstantsCommon;
 import model.story.StoryItem;
 import tools.AsyncImageViewHelper;
-import ui.Story;
 
 public class StoryGridViewAdapter extends BaseAdapter implements ListAdapter {
 
@@ -31,7 +30,6 @@ public class StoryGridViewAdapter extends BaseAdapter implements ListAdapter {
     /**
      * 构造方法
      * @param item
-     * @param mainActivity
      * @param data
      */
     public StoryGridViewAdapter(int item, Context context,ArrayList<StoryItem> data)

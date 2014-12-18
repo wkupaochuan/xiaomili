@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import constants.ConstantsCommon;
 import model.story.StoryItem;
+import tools.AsyncImageViewHelper;
 import tools.XMediaPlayer;
 
 public class PlayingStoryFragment extends BaseFragment{
@@ -155,7 +156,6 @@ public class PlayingStoryFragment extends BaseFragment{
 
 
 
-
     /**
      * 播放暂停按钮点击事件
      */
@@ -193,17 +193,25 @@ public class PlayingStoryFragment extends BaseFragment{
         Log.e(ConstantsCommon.LOG_TAG, "播放故事编号:" + position);
         if(position >= 0 && position < this.storyItemsList.size())
         {
+            StoryItem storyItem = this.storyItemsList.get(position);
             this.playIngStatus = 1;
             this.activeItemNum = position;
-            String storyPath = this.storyItemsList.get(position).getLocation();
+            String storyPath = storyItem.getLocation();
             storyPath = "http://toy-admin.wkupaochuan.com" + storyPath;
 
             // 设置标题
-            String storyTile = this.storyItemsList.get(position).getTitle();
+            String storyTile = storyItem.getTitle();
             this.tvStoryTitle.setText(storyTile);
 
-            // 设置故事封面
-
+            // todo 设置故事封面 toto
+            String storyCoverPath = storyItem.getStoryCover();
+            if(storyCoverPath != null && !storyCoverPath.equals(""))
+            {
+                //异步加载图片资源
+                AsyncImageViewHelper async = new AsyncImageViewHelper(this.imageViewStoryCover);
+                //执行异步加载，并把图片的路径传送过去
+                async.execute(storyCoverPath);
+            }
 
             // 播放故事
             Log.e(ConstantsCommon.LOG_TAG, "播放故事地址:" + storyPath);
