@@ -197,13 +197,12 @@ public class PlayingStoryFragment extends BaseFragment{
             this.playIngStatus = 1;
             this.activeItemNum = position;
             String storyPath = storyItem.getLocation();
-            storyPath = "http://toy-admin.wkupaochuan.com" + storyPath;
 
             // 设置标题
             String storyTile = storyItem.getTitle();
             this.tvStoryTitle.setText(storyTile);
 
-            // todo 设置故事封面 toto
+            //
             String storyCoverPath = storyItem.getStoryCover();
             if(storyCoverPath != null && !storyCoverPath.equals(""))
             {
