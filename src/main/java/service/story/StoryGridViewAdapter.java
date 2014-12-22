@@ -30,6 +30,7 @@ public class StoryGridViewAdapter extends BaseAdapter implements ListAdapter {
     /**
      * 构造方法
      * @param item
+     * @param mainActivity
      * @param data
      */
     public StoryGridViewAdapter(int item, Context context,ArrayList<StoryItem> data)

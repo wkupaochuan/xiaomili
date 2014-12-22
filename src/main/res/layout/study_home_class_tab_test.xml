@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!--图片-->
+    <LinearLayout
+        android:id="@+id/study_home_class_tab_class_cover_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+        <!--课程名称-->
+        <TextView
+            android:id="@+id/class_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="登鹳雀楼"
+            android:textSize="40sp"
+            android:layout_weight="3"
+            >
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/class_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/microphone"
+            >
+
+        </ImageView>
+
+
+        <!--进度和成绩-->
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            >
+
+            <!--进度-->
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                >
+
+                <ProgressBar
+                    android:id="@+id/class_progress"
+                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progress="10"
+                    android:max="100"
+                    android:layout_gravity="center"
+                    android:progressDrawable="@drawable/color_progress_bar"
+                    >
+
+                </ProgressBar>
+
+            </LinearLayout>
+
+
+            <!--成绩-->
+            <LinearLayout
+                android:id="@+id/ll_class_grade"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!--按钮-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        >
+
+
+        <!--修炼-->
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:text="修炼"
+                android:textSize="40sp"
+                android:gravity="center"
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+
+        #竖直分割线#
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#fb9441"
+            />
+
+
+        <!--闯关-->
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:text="闯关"
+                android:textSize="40sp"
+                android:gravity="center"
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

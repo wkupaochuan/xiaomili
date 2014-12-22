@@ -51,7 +51,8 @@ public class Welcome extends BaseActivity {
      */
     public void studyTabOnClick (View view){
 
-		Intent intent = new Intent(this, Study.class);
+//		Intent intent = new Intent(this, Study.class);
+        Intent intent = new Intent(this, StudyHomeTest.class);
 		startActivity(intent);
     }
     
