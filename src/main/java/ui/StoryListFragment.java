@@ -25,6 +25,7 @@ import constants.ConstantsCommon;
 import model.story.StoryItem;
 import service.story.StoryGridViewAdapter;
 import tools.BaiduVoice;
+import tools.image.ImageResizer;
 
 public class StoryListFragment extends BaseFragment{
 
@@ -43,6 +44,48 @@ public class StoryListFragment extends BaseFragment{
     private View view;
 
     StoryItemOnClickListener mListener;
+
+
+    private static final String IMAGE_CACHE_DIR = "thumbs";
+
+    private int mImageThumbSize;
+    private int mImageThumbSpacing;
+    private ImageResizer mImageWorker;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+//        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+//        mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
+//
+//        ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams(IMAGE_CACHE_DIR);
+//
+//        // Allocate a third of the per-app memory limit to the bitmap memory cache. This value
+//        // should be chosen carefully based on a number of factors. Refer to the corresponding
+//        // Android Training class for more discussion:
+//        // http://developer.android.com/training/displaying-bitmaps/
+//        // In this case, we aren't using memory for much else other than this activity and the
+//        // ImageDetailActivity so a third lets us keep all our sample image thumbnails in memory
+//        // at once.
+//
+//        cacheParams.memCacheSize = 1024 * 1024 * Utils.getMemoryClass(getActivity()) / 3;
+//
+//        // The ImageWorker takes care of loading images into our ImageView children asynchronously
+//
+//        mImageWorker = new ImageFetcher(getActivity(), mImageThumbSize);
+//
+//        MyImageWorkAdapter imageWorkAdapter = new MyImageWorkAdapter();
+//
+//        mImageWorker.setAdapter(imageWorkAdapter);
+//        mImageWorker.setLoadingImage(R.drawable.story_cover_test);
+//
+//        mImageWorker.setImageCache(ImageCache.findOrCreateCache(getActivity(), cacheParams));
+    }
+
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)

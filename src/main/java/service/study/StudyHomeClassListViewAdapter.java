@@ -119,6 +119,7 @@ public class StudyHomeClassListViewAdapter extends BaseAdapter implements ListAd
      */
     private void setClassGrade(LinearLayout llGrade, int grade)
     {
+        llGrade.removeAllViews();
         int starCount;
         if(grade < 60)
         {
@@ -132,7 +133,7 @@ public class StudyHomeClassListViewAdapter extends BaseAdapter implements ListAd
         {
             ImageView imageView = new ImageView(this.context);
 
-            imageView.setBackgroundResource(R.drawable.grade_star);
+            imageView.setBackgroundResource(R.drawable.class_grade_star);
 
             llGrade.addView(imageView);
         }

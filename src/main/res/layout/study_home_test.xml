@@ -4,14 +4,51 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fdf9e4"
     >
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:id="@+id/top_bar"
+        android:background="#f98221"
+        android:onClick="backToPre"
+        >
+
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/back_button"
+            android:layout_width="78dp"
+            android:layout_height="35dp"
+            />
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="5dp"
+            android:text="学习"
+            android:textColor="#fdf9e4"
+            android:textSize="34dp"
+            />
+
+    </LinearLayout>
 
     <!--今日课程列表-->
     <ListView
+        android:layout_gravity="center"
         android:id="@+id/class_list_for_today"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:dividerHeight="60dp"
+        android:divider="#fdf9e4"
         >
 
     </ListView>

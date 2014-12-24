@@ -19,7 +19,7 @@ import constants.ConstantsCommon;
 import model.story.StoryItem;
 import tools.AsyncImageViewHelper;
 
-public class StoryGridViewAdapter extends BaseAdapter implements ListAdapter {
+public class StoryGridViewAdapterBak extends BaseAdapter implements ListAdapter {
 
     private ArrayList<StoryItem> data;
     private int id;
@@ -30,11 +30,13 @@ public class StoryGridViewAdapter extends BaseAdapter implements ListAdapter {
     /**
      * 构造方法
      * @param item
+     * @param mainActivity
      * @param data
      */
-    public StoryGridViewAdapter(int item, Context context,ArrayList<StoryItem> data)
+    public StoryGridViewAdapterBak(int item, Context context, ArrayList<StoryItem> data)
     {
         this.data=data;
+//        this.context=mainActivity;
         this.id=item;
         inflater=LayoutInflater.from(context);
     }

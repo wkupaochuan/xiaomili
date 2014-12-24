@@ -4,15 +4,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fdf9e4"
     >
 
     <!--图片-->
     <LinearLayout
         android:id="@+id/study_home_class_tab_class_cover_layout"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
+        android:layout_width="291dp"
         android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
         >
 
         <!--课程名称-->
@@ -21,29 +22,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="登鹳雀楼"
-            android:textSize="40sp"
-            android:layout_weight="3"
+            android:textSize="20sp"
             >
 
         </TextView>
 
         <ImageView
             android:id="@+id/class_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="291dp"
+            android:layout_height="131dp"
             android:background="@drawable/microphone"
+            android:layout_marginTop="5dp"
             >
-
         </ImageView>
 
 
         <!--进度和成绩-->
         <LinearLayout
-            android:layout_height="match_parent"
+            android:layout_height="10dp"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="2"
+            android:layout_marginTop="5dp"
             >
 
             <!--进度-->
@@ -63,6 +62,7 @@
                     android:max="100"
                     android:layout_gravity="center"
                     android:progressDrawable="@drawable/color_progress_bar"
+                    android:layout_marginStart="5dp"
                     >
 
                 </ProgressBar>
@@ -90,10 +90,11 @@
 
     <!--按钮-->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="291dp"
         android:layout_height="match_parent"
-        android:layout_weight="4"
         android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
         >
 
 
@@ -104,25 +105,16 @@
             android:layout_weight="1"
             >
 
-            <TextView
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:text="修炼"
-                android:textSize="40sp"
-                android:gravity="center"
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="36dp"
+                android:background="@drawable/class_practice"
+                android:layout_gravity="center"
                 >
 
-            </TextView>
+            </ImageView>
 
         </LinearLayout>
-
-
-        #竖直分割线#
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#fb9441"
-            />
 
 
         <!--闯关-->
@@ -132,15 +124,14 @@
             android:layout_weight="1"
             >
 
-            <TextView
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:text="闯关"
-                android:textSize="40sp"
-                android:gravity="center"
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="36dp"
+                android:background="@drawable/class_challenge"
+                android:layout_gravity="center"
                 >
 
-            </TextView>
+            </ImageView>
 
         </LinearLayout>
 

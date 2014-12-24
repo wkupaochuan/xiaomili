@@ -1,12 +1,19 @@
 package ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.ai.welcome.R;
 
 import java.util.ArrayList;
 
+import api.ClientCallBack;
+import api.study.GetClassesForToday;
+import constants.ConstantsCommon;
 import model.study.ClassModel;
 import service.study.StudyHomeClassListViewAdapter;
 
@@ -41,34 +48,61 @@ public class StudyHomeTest extends BaseActivity{
         // 初始化今日课程列表
         this.classListViewForToday = (ListView)this.findViewById(R.id.class_list_for_today);
 
-        StudyHomeClassListViewAdapter adapter = new StudyHomeClassListViewAdapter(R.layout.study_home_class_tab_test, this, this.getClassList());
+
+        this.getClassesFromServer();
+    }
+
+
+    /**
+     * 更新课程列表listview
+     * @param classes
+     */
+    private void updateClassListView(ArrayList<ClassModel> classes)
+    {
+        StudyHomeClassListViewAdapter adapter = new StudyHomeClassListViewAdapter(R.layout.study_home_class_tab_test, this, classes);
 
         this.classListViewForToday.setAdapter(adapter);
     }
 
 
-
-    private ArrayList<ClassModel> getClassList()
+    /**
+     * 从服务端获取今日课程列表
+     */
+    private void getClassesFromServer()
     {
-        ArrayList<ClassModel> classList = new ArrayList<ClassModel>();
-        for(int i = 0; i < 3; ++i)
-        {
-            ClassModel tmp = new ClassModel();
-            tmp.setClassTitle("测试");
+        GetClassesForToday.getClass(new ClientCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                ArrayList<ClassModel> classes = (ArrayList<ClassModel>)data;
+                if (classes.size() == 0) {
+                    Toast toast = Toast.makeText(StudyHomeTest.this, "暂无数据", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    // 更新课程列表
+                    StudyHomeTest.this.updateClassListView(classes);
+                }
+            }
 
-            tmp.setClassCover("http://toy-admin.wkupaochuan.com/mp3_files/62c7c2a287015e5f5a59d1b1d701a52f.jpg");
+            @Override
+            public void onFailure(String message) {
 
-            tmp.setRateOfProgress(80);
-
-            tmp.setGradeForClass(80);
-
-            classList.add(tmp);
-        }
-
-
-        return classList;
+                Log.e(ConstantsCommon.LOG_TAG, message);
+                Toast toast = Toast.makeText(StudyHomeTest.this, message, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
+
+    /**
+     * 返回主页
+     * @param view
+     */
+    public void backToPre(View view)
+    {
+        Intent intent = new Intent(this, Welcome.class);
+        startActivity(intent);
+    }
     
 
 }
