@@ -48,7 +48,6 @@ public class StudyHomeTest extends BaseActivity{
         // 初始化今日课程列表
         this.classListViewForToday = (ListView)this.findViewById(R.id.class_list_for_today);
 
-
         this.getClassesFromServer();
     }
 

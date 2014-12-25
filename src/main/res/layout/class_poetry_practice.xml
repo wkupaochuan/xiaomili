@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:id="@+id/top_bar"
+        android:background="#f98221"
+        android:onClick="backToPre"
+        >
+
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/back_button"
+            android:layout_width="78dp"
+            android:layout_height="35dp"
+            />
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="5dp"
+            android:text="学唐诗"
+            android:textColor="#fdf9e4"
+            android:textSize="34dp"
+            />
+
+    </LinearLayout>
+
+
+    <!--诗句-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="40dp"
+            android:text="登鹳雀楼"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:textColor="#5a4626"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="王之涣"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="#786f61"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:text="白日依山尽"
+            android:textColor="#786f61"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:text="黄河入海流"
+            android:textColor="#5a4626"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:text="欲穷千里目"
+            android:textColor="#786f61"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:text="更上一层楼"
+            android:textColor="#786f61"
+            />
+
+    </LinearLayout>
+
+
+    <!--按钮-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        >
+
+
+        <!--继续修炼-->
+        <ImageView
+            android:layout_width="152dp"
+            android:layout_height="36dp"
+            android:src="@drawable/class_go_chanlenge"
+            android:layout_weight="1"
+            >
+
+        </ImageView>
+
+        <!--去闯关-->
+        <ImageView
+            android:layout_width="152dp"
+            android:layout_height="36dp"
+            android:src="@drawable/class_practice_again"
+            android:layout_weight="1"
+            >
+
+        </ImageView>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

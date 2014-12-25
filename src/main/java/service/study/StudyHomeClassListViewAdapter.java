@@ -2,6 +2,7 @@ package service.study;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import constants.ConstantsCommon;
 import model.study.ClassModel;
 import tools.AsyncImageViewHelper;
+import ui.ClassPoetryPractice;
 
 /**
  * 学习主页，课程列表adapter
@@ -72,6 +74,8 @@ public class StudyHomeClassListViewAdapter extends BaseAdapter implements ListAd
         ImageView classCover;
         ProgressBar progressBar;
         LinearLayout llGrade;
+        LinearLayout llPractice;
+        LinearLayout llChanlenge;
 
 
         if(view == null)
@@ -81,9 +85,11 @@ public class StudyHomeClassListViewAdapter extends BaseAdapter implements ListAd
             classCover = (ImageView) view.findViewById(R.id.class_cover);
             progressBar = (ProgressBar) view.findViewById(R.id.class_progress);
             llGrade = (LinearLayout) view.findViewById(R.id.ll_class_grade);
+            llPractice = (LinearLayout) view.findViewById(R.id.practice);
+            llChanlenge = (LinearLayout) view.findViewById(R.id.chanlenge);
 
             //保存view对象到ObjectClass类中
-            view.setTag(new ObjectClass(classTitle, classCover, progressBar, llGrade));
+            view.setTag(new ObjectClass(classTitle, classCover, progressBar, llGrade, llPractice, llChanlenge));
         }
         else
         {
@@ -93,6 +99,8 @@ public class StudyHomeClassListViewAdapter extends BaseAdapter implements ListAd
             classCover = objectclass.classCover;
             progressBar = objectclass.rateOfProgress;
             llGrade = objectclass.llGrade;
+            llPractice = objectclass.llPractice;
+            llChanlenge = objectclass.llChanlenge;
         }
 
         ClassModel oClass = this.classList.get(position);
@@ -108,6 +116,16 @@ public class StudyHomeClassListViewAdapter extends BaseAdapter implements ListAd
 
         // 设置课程分数
         this.setClassGrade(llGrade, oClass.getGradeForClass());
+
+
+        // 修炼点击
+        llPractice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ClassPoetryPractice.class);
+                context.startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -174,13 +192,19 @@ public class StudyHomeClassListViewAdapter extends BaseAdapter implements ListAd
         // 课程分数
         LinearLayout llGrade;
 
+        LinearLayout llPractice;
+        LinearLayout llChanlenge;
 
-        public ObjectClass(TextView classTitle, ImageView classCover, ProgressBar rateOfProgress, LinearLayout llGrade)
+
+        public ObjectClass(TextView classTitle, ImageView classCover, ProgressBar rateOfProgress, LinearLayout llGrade, LinearLayout llPractice, LinearLayout llChanlenge)
         {
             this.classTitle = classTitle;
             this.classCover = classCover;
             this.rateOfProgress = rateOfProgress;
             this.llGrade = llGrade;
+
+            this.llPractice = llPractice;
+            this.llChanlenge = llChanlenge;
         }
     }
 }

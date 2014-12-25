@@ -8,6 +8,9 @@ import java.util.List;
  */
 public class ClassModel {
 
+    // 课程id
+    private int classId;
+
     // 课程名称
     private String classTitle;
 
@@ -20,12 +23,29 @@ public class ClassModel {
     // 课程得分
     private int gradeForClass;
 
+    // 课程类型
+    private int classTypeId;
+
     // 课程中所有句子
     private List<ClassSentenceModel> sentences;
 
 
 
+    public int getClassId() {
+        return classId;
+    }
 
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    public int getClassTypeId() {
+        return classTypeId;
+    }
+
+    public void setClassTypeId(int classTypeId) {
+        this.classTypeId = classTypeId;
+    }
 
     public String getClassTitle() {
         return classTitle;
