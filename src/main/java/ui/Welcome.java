@@ -3,12 +3,15 @@ package ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 
 import com.ai.welcome.R;
 
 
 public class Welcome extends BaseActivity {
+
+    public static String deviceId;
 
     /**
      * 构建窗口
@@ -19,9 +22,10 @@ public class Welcome extends BaseActivity {
 //        setContentView(R.layout.activity_welcome);
         setContentView(R.layout.welcome_test);
 
-//
-//        String DeviceId = Settings.Secure.getString(
-//                this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        String DeviceId = Settings.Secure.getString(
+                this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceId = DeviceId;
 //
 //        Log.e("xxx唯一id", DeviceId);
 //

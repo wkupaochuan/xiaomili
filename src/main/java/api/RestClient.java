@@ -9,6 +9,7 @@ import com.loopj.android.http.RequestParams;
 
 import constants.ApiURL;
 import constants.ConstantsCommon;
+import ui.Welcome;
 
 
 /**
@@ -48,6 +49,7 @@ public class RestClient {
      */
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)
     {
+        params.add("toy_unique_id", Welcome.deviceId);
         Log.e(ConstantsCommon.LOG_TAG, getAbsoluteUrl(url));
         RestClient.client.post(getAbsoluteUrl(url), params, responseHandler);
     }
@@ -59,4 +61,5 @@ public class RestClient {
         client.setMaxConnections(5);
         return ApiURL.API_HOME + relativeUrl;
     }
+
 }

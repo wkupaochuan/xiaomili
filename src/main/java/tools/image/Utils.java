@@ -30,6 +30,7 @@ import java.io.File;
  * Class containing some static utility methods.
  */
 public class Utils {
+    // 8K的io buffer
     public static final int IO_BUFFER_SIZE = 8 * 1024;
 
     private Utils() {};
