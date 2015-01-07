@@ -4,9 +4,13 @@ package ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 
+
 import com.ai.welcome.R;
+
+import constants.ConstantsCommon;
 
 
 public class Welcome extends BaseActivity {
@@ -26,13 +30,22 @@ public class Welcome extends BaseActivity {
         String DeviceId = Settings.Secure.getString(
                 this.getContentResolver(), Settings.Secure.ANDROID_ID);
         deviceId = DeviceId;
-//
+
+        this.test();
+    }
+
+
+    private void test()
+    {
+        Log.e(ConstantsCommon.LOG_TAG, System.getProperty("java.version").toString());
+
 //        Log.e("xxx唯一id", DeviceId);
 //
 //        String Imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
 //                .getDeviceId();
 //
 //        Log.e("imei", DeviceId);
+
 
     }
 
@@ -54,11 +67,20 @@ public class Welcome extends BaseActivity {
      * @param view
      */
     public void studyTabOnClick (View view){
-
-//		Intent intent = new Intent(this, Study.class);
         Intent intent = new Intent(this, StudyHomeTest.class);
 		startActivity(intent);
     }
+
+
+    /**
+     * 聊天页面
+     * @param view
+     */
+    public void chatTabOnClick (View view){
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
+    }
+
     
     
 }
