@@ -10,13 +10,15 @@ import android.widget.EditText;
 import com.ai.welcome.R;
 import com.alibaba.fastjson.JSON;
 
+import java.io.File;
 import java.io.IOException;
 
 import api.ClientCallBack;
 import api.chat.UploadFile;
 import constants.ConstantsCommon;
 import model.chat.JsonMessage;
-import service.chat.ConnectManager;
+import service.chat.ChatConnectManager;
+import tools.XMediaPlayer;
 
 
 public class ChatActivity extends BaseActivity{
@@ -36,7 +38,7 @@ public class ChatActivity extends BaseActivity{
         this.tvMsg = (EditText)this.findViewById(R.id.tv_sms);
 
         // 使用deviceid登陆(如果用户不存在，注册后登陆)
-        ConnectManager.login(Welcome.deviceId);
+        ChatConnectManager.login(Welcome.deviceId);
 
         //设置sdcard的路径
         FileName = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -48,7 +50,7 @@ public class ChatActivity extends BaseActivity{
     {
         String msg = this.tvMsg.getText().toString();
 
-        ConnectManager.sendMessage(msg, "test1@iz255gm1qk6z/Spark 2.6.3");
+        ChatConnectManager.sendMessage(msg, "test1@iz255gm1qk6z/Spark 2.6.3");
     }
 
 
@@ -64,7 +66,7 @@ public class ChatActivity extends BaseActivity{
         jMsg.file = filePath;
         String msgContent = JSON.toJSONString(jMsg);
 
-        ConnectManager.sendMessage(msgContent, "test1@iz255gm1qk6z/Spark 2.6.3");
+        ChatConnectManager.sendMessage(msgContent, "test1@iz255gm1qk6z/Spark 2.6.3");
     }
 
 
@@ -132,6 +134,41 @@ public class ChatActivity extends BaseActivity{
         });
 
     }
+
+
+
+    /**
+     * 播放消息
+     * @param strMsg
+     */
+    public static void playMsg(String strMsg)
+    {
+        Log.e(ConstantsCommon.LOG_TAG, "接收到消息:" + strMsg);
+        JsonMessage jMsg = JsonMessage.parse(strMsg);
+        String fileUrl = "http://toy-api.wkupaochuan.com/" + jMsg.file;
+        String filePath = ChatActivity.getDownloadFilePath(jMsg.file);
+//        new DownLoadFileTask(fileUrl, filePath).start();
+
+        Log.e(ConstantsCommon.LOG_TAG, "播放:" + filePath);
+        XMediaPlayer.play(filePath);
+    }
+
+
+    private static String getDownloadFilePath(String fileUrl)
+    {
+        String fileName = fileUrl.substring(fileUrl.indexOf("/") + 1);
+
+        String dowloadDir = Environment.getExternalStorageDirectory()
+                + "/download/";
+        File file = new File(dowloadDir);
+        //创建下载目录
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String filePath = dowloadDir + fileName;
+        return filePath;
+    }
+
 
 
 }

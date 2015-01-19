@@ -14,8 +14,9 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
 import constants.ConstantsCommon;
+import ui.ChatActivity;
 
-public class ConnectManager {
+public class ChatConnectManager {
     public static ConnectionConfiguration connConfig;
     public static XMPPConnection xmppConnection;
     public static ChatManager chatManager;
@@ -35,28 +36,28 @@ public class ConnectManager {
      */
     public static void login (final String Username)
     {
-        connConfig = new ConnectionConfiguration(ConnectManager.serverIP, ConnectManager.serverPort);
+        connConfig = new ConnectionConfiguration(ChatConnectManager.serverIP, ChatConnectManager.serverPort);
 
         // 关闭安全模式，必须
-        ConnectManager.connConfig.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
+        ChatConnectManager.connConfig.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
 
-        ConnectManager.xmppConnection = new XMPPTCPConnection(connConfig);
+        ChatConnectManager.xmppConnection = new XMPPTCPConnection(connConfig);
 
         new Thread()
         {
             public void run() {
                 try {
-                    ConnectManager.xmppConnection.connect();
-                    ConnectManager.xmppConnection.login(Username, ConnectManager.password);
+                    ChatConnectManager.xmppConnection.connect();
+                    ChatConnectManager.xmppConnection.login(Username, ChatConnectManager.password);
 
-                    ConnectManager.RegisterMessageListener();
+                    ChatConnectManager.RegisterMessageListener();
                 }
                 catch (Exception ex) {
 
                     // todo 完善未注册判别机制
                     if(ex.getMessage().contains("not-authorized"))
                     {
-                        ConnectManager.register(Username);
+                        ChatConnectManager.register(Username);
 
                     }
 
@@ -77,11 +78,11 @@ public class ConnectManager {
         {
             public void run() {
                 try {
-                    AccountManager accountManager = AccountManager.getInstance(ConnectManager.xmppConnection);
-                    accountManager.createAccount(userName, ConnectManager.password);
+                    AccountManager accountManager = AccountManager.getInstance(ChatConnectManager.xmppConnection);
+                    accountManager.createAccount(userName, ChatConnectManager.password);
 
                     // 注册完毕，自动登录
-                    ConnectManager.login(userName);
+                    ChatConnectManager.login(userName);
                 }
                 catch (Exception ex) {
                     Log.e(ConstantsCommon.LOG_TAG, ex.getMessage());
@@ -96,16 +97,26 @@ public class ConnectManager {
      */
     protected static void RegisterMessageListener() {
 
-        ConnectManager.chatManager = ChatManager.getInstanceFor(ConnectManager.xmppConnection);
+        ChatConnectManager.chatManager = ChatManager.getInstanceFor(ChatConnectManager.xmppConnection);
 
-        ConnectManager.chatManager.addChatListener(new ChatManagerListener() {
+        ChatConnectManager.chatManager.addChatListener(new ChatManagerListener() {
 
             public void chatCreated(Chat chat, boolean arg1) {
+
                 chat.addMessageListener(new MessageListener() {
 
+
+                    /**
+                     * 接收到好友发来的消息
+                     * @param arg0
+                     * @param message
+                     */
                     public void processMessage(Chat arg0, Message message) {
-                        ConnectManager.sendMessage("我在app", message.getFrom());
+                        ChatConnectManager.sendMessage("我在app", message.getFrom());
+
+                        ChatActivity.playMsg(message.getBody());
                     }
+
                 });
 
             }
@@ -115,18 +126,18 @@ public class ConnectManager {
 
 
     /**
-     * 发送文字消息
+     * 发送消息(图片、音频类型的消息采取json格式)
      * @param msg
      * @param msgto
      */
     public static void sendMessage(final String msg,final String msgto) {
-        ConnectManager.chat = chatManager.createChat(msgto, null);
+        ChatConnectManager.chat = chatManager.createChat(msgto, null);
 
         new Thread()
         {
             public void run() {
                 try {
-                    ConnectManager.chat.sendMessage(msg);
+                    ChatConnectManager.chat.sendMessage(msg);
                 } catch (Exception e) {
                     Log.e(ConstantsCommon.LOG_TAG, e.getMessage());
                 }
