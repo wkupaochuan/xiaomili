@@ -3,6 +3,7 @@ package service.chat;
 import android.app.Activity;
 import android.util.Log;
 
+import org.jivesoftware.smack.AccountManager;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ChatManagerListener;
@@ -23,17 +24,18 @@ public class ConnectManager {
     public static String User;
     public static Chat chat ;
 
+    public static String serverIP = "182.92.130.192";
+    public static int serverPort = 5222;
+    public static String password = "ijnUHB";
+
 
     /**
      * 登陆
-     * @param ServerIP
-     * @param serverport
      * @param Username
-     * @param Password
      */
-    public static void login (final String ServerIP,final int serverport, final String Username,final String Password)
+    public static void login (final String Username)
     {
-        connConfig = new ConnectionConfiguration(ServerIP, serverport);
+        connConfig = new ConnectionConfiguration(ConnectManager.serverIP, ConnectManager.serverPort);
 
         // 关闭安全模式，必须
         ConnectManager.connConfig.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
@@ -45,9 +47,41 @@ public class ConnectManager {
             public void run() {
                 try {
                     ConnectManager.xmppConnection.connect();
-                    ConnectManager.xmppConnection.login(Username, Password);
+                    ConnectManager.xmppConnection.login(Username, ConnectManager.password);
 
                     ConnectManager.RegisterMessageListener();
+                }
+                catch (Exception ex) {
+
+                    // todo 完善未注册判别机制
+                    if(ex.getMessage().contains("not-authorized"))
+                    {
+                        ConnectManager.register(Username);
+
+                    }
+
+                    Log.e(ConstantsCommon.LOG_TAG, ex.getMessage());
+                }
+            }
+        }.start();
+    }
+
+
+    /**
+     * 注册
+     * @param userName
+     */
+    public static void register(final String userName)
+    {
+        new Thread()
+        {
+            public void run() {
+                try {
+                    AccountManager accountManager = AccountManager.getInstance(ConnectManager.xmppConnection);
+                    accountManager.createAccount(userName, ConnectManager.password);
+
+                    // 注册完毕，自动登录
+                    ConnectManager.login(userName);
                 }
                 catch (Exception ex) {
                     Log.e(ConstantsCommon.LOG_TAG, ex.getMessage());

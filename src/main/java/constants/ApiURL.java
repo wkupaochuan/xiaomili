@@ -7,4 +7,7 @@ public class ApiURL {
 	
 	// 获取故事列表
 	public static final String GET_STORY_LIST = "story/index/get_story_list";
+
+    // 上传文件
+    public static final String UPLOAD_FILE_TO_SERVER = "wechat/index/upload_file";
 }
