@@ -9,17 +9,20 @@ import java.io.RandomAccessFile;
 import java.net.URL;
 import java.net.URLConnection;
 
+import api.ClientCallBack;
+
 public class DownLoadFileTask extends Thread{
 
     private int threadNum = 3;
     private String fileUrl;
     private String filePath;
+    private ClientCallBack callBack;
 
-
-    public DownLoadFileTask(String fileUrl, String filePath)
+    public DownLoadFileTask(String fileUrl, String filePath, ClientCallBack callBack)
     {
         this.fileUrl = fileUrl;
         this.filePath = filePath;
+        this.callBack = callBack;
     }
 
     /**
@@ -37,6 +40,8 @@ public class DownLoadFileTask extends Thread{
             int blockSize = fileSize/this.threadNum;
 
             File file = new File(this.filePath);
+
+            FileDownloadThread[] fdtArray = new FileDownloadThread[this.threadNum];
             for(int i = 0; i < this.threadNum; ++i)
             {
                 int beginPosition = i * blockSize;
@@ -47,7 +52,28 @@ public class DownLoadFileTask extends Thread{
                 }
                 FileDownloadThread fdt = new FileDownloadThread(url, file, beginPosition, endPostion);
                 fdt.start();
+                fdtArray[i] = fdt;
             }
+
+
+            // 判定是否下载结束
+            boolean isFinished = false;
+            while(!isFinished)
+            {
+                isFinished = true;
+                for(int i = 0; i < fdtArray.length; ++i)
+                {
+                    if(!fdtArray[i].isFinished())
+                    {
+                        isFinished = false;
+                    }
+                }
+            }
+
+            // 下载结束，调用回调函数
+            this.callBack.onSuccess(this.filePath);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,8 +81,9 @@ public class DownLoadFileTask extends Thread{
     }
 
 
-
-
+    /**
+     * 下载线程
+     */
     private class FileDownloadThread extends  Thread{
         private static final int BUFFER_SIZE = 1024;
         private URL fileUrl;
@@ -64,6 +91,7 @@ public class DownLoadFileTask extends Thread{
         private int beginPosition;
         private int endPosition;
         private int curPosition;
+        private boolean isFinished = false;
 
 
         public FileDownloadThread(URL url, File file, int beginPosition, int endPosition)
@@ -108,9 +136,22 @@ public class DownLoadFileTask extends Thread{
                 }
                 bis.close();
                 fos.close();
+
+                // 标记下载结束
+                this.isFinished = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+
+        /**
+         * 判定下载是否结束
+         * @return
+         */
+        public boolean isFinished()
+        {
+            return this.isFinished;
         }
     }
 }

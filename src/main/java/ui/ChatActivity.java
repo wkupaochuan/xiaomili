@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 import api.ClientCallBack;
+import api.chat.DownLoadFileTask;
 import api.chat.UploadFile;
 import constants.ConstantsCommon;
 import model.chat.JsonMessage;
@@ -147,10 +148,30 @@ public class ChatActivity extends BaseActivity{
         JsonMessage jMsg = JsonMessage.parse(strMsg);
         String fileUrl = "http://toy-api.wkupaochuan.com/" + jMsg.file;
         String filePath = ChatActivity.getDownloadFilePath(jMsg.file);
-//        new DownLoadFileTask(fileUrl, filePath).start();
 
-        Log.e(ConstantsCommon.LOG_TAG, "播放:" + filePath);
-        XMediaPlayer.play(filePath);
+        // 下载结束的回到方法
+        ClientCallBack callBack = new ClientCallBack() {
+            /**
+             * 下载成功
+             * @param data
+             */
+            public void onSuccess(Object data) {
+                String filePath = (String) data;
+                Log.e(ConstantsCommon.LOG_TAG, "下载结束:播放:" + filePath);
+                XMediaPlayer.play(filePath);
+            }
+
+            /**
+             * 下载结束
+             * @param message
+             */
+            public void onFailure(String message) {
+
+            }
+        };
+
+        // 下载结束之后，调用回调方法
+        new DownLoadFileTask(fileUrl, filePath, callBack).start();
     }
 
 
