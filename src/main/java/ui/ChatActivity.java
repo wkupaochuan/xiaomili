@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.ai.welcome.R;
 import com.alibaba.fastjson.JSON;
+import com.gauss.recorder.SpeexRecorder;
 
 import java.io.File;
 
@@ -19,7 +20,6 @@ import constants.ConstantsCommon;
 import model.chat.JsonMessage;
 import service.chat.ChatConnectManager;
 import tools.XMediaPlayer;
-import tools.recorder.SpeexRecorder;
 
 
 public class ChatActivity extends BaseActivity{
