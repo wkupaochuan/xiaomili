@@ -11,7 +11,6 @@ import com.ai.welcome.R;
 import com.alibaba.fastjson.JSON;
 
 import java.io.File;
-import java.io.IOException;
 
 import api.ClientCallBack;
 import api.chat.DownLoadFileTask;
@@ -20,6 +19,7 @@ import constants.ConstantsCommon;
 import model.chat.JsonMessage;
 import service.chat.ChatConnectManager;
 import tools.XMediaPlayer;
+import tools.recorder.SpeexRecorder;
 
 
 public class ChatActivity extends BaseActivity{
@@ -30,6 +30,8 @@ public class ChatActivity extends BaseActivity{
 
     //语音文件保存路径
     private String FileName = null;
+
+    SpeexRecorder recorderInstance = null;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,9 @@ public class ChatActivity extends BaseActivity{
 
         //设置sdcard的路径
         FileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        FileName += "/audiorecordtest.3gp";
+        FileName += "/audiorecordtest.spx";
+
+        this.recorderInstance = new SpeexRecorder(FileName);
     }
 
 
@@ -70,23 +74,15 @@ public class ChatActivity extends BaseActivity{
         ChatConnectManager.sendMessage(msgContent, "test1@iz255gm1qk6z/Spark 2.6.3");
     }
 
-
     /**
      * 开始录音
      * @param view
      */
     public void startRecord(View view)
     {
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(FileName);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        try {
-            mRecorder.prepare();
-        } catch (IOException e) {
-        }
-        mRecorder.start();
+        Thread th = new Thread(recorderInstance);
+        th.start();
+        this.recorderInstance.setRecording(true);
     }
 
 
@@ -95,16 +91,44 @@ public class ChatActivity extends BaseActivity{
      * @param view
      */
     public void stopRecord(View view){
-        mRecorder.stop();
-        mRecorder.release();
-        mRecorder = null;
-
-        // 播放录音
-//        XMediaPlayer.play(this.FileName);
+        this.recorderInstance.setRecording(false);
 
         // 上传文件到服务器
         this.upload(this.FileName);
     }
+
+
+//    /**
+//     * 开始录音
+//     * @param view
+//     */
+//    public void startRecord(View view)
+//    {
+//        mRecorder = new MediaRecorder();
+//        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+//        mRecorder.setOutputFile(FileName);
+//        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+//        try {
+//            mRecorder.prepare();
+//        } catch (IOException e) {
+//        }
+//        mRecorder.start();
+//    }
+//
+//
+//    /**
+//     * 结束录音
+//     * @param view
+//     */
+//    public void stopRecord(View view){
+//        mRecorder.stop();
+//        mRecorder.release();
+//        mRecorder = null;
+//
+//        // 上传文件到服务器
+//        this.upload(this.FileName);
+//    }
 
 
 
@@ -114,7 +138,6 @@ public class ChatActivity extends BaseActivity{
      */
     private void upload(String filePath)
     {
-
         UploadFile.uploadFile(filePath, new ClientCallBack() {
 
             // 请求成功
