@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 import com.ai.welcome.R;
 import com.alibaba.fastjson.JSON;
-import com.gauss.recorder.SpeexRecorder;
 
 import java.io.File;
 
@@ -31,8 +30,17 @@ public class ChatActivity extends BaseActivity{
     //语音文件保存路径
     private String FileName = null;
 
-    SpeexRecorder recorderInstance = null;
+//    SpeexRecorder recorderInstance = null;
 
+
+    /**
+     * 测试jni
+     */
+    static {
+        System.loadLibrary("JniTest");
+    }
+
+    public native String getStringFromNative();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +55,7 @@ public class ChatActivity extends BaseActivity{
         FileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         FileName += "/audiorecordtest.spx";
 
-        this.recorderInstance = new SpeexRecorder(FileName);
+//        this.recorderInstance = new SpeexRecorder(FileName);
     }
 
 
@@ -80,9 +88,9 @@ public class ChatActivity extends BaseActivity{
      */
     public void startRecord(View view)
     {
-        Thread th = new Thread(recorderInstance);
-        th.start();
-        this.recorderInstance.setRecording(true);
+//        Thread th = new Thread(recorderInstance);
+//        th.start();
+//        this.recorderInstance.setRecording(true);
     }
 
 
@@ -91,7 +99,7 @@ public class ChatActivity extends BaseActivity{
      * @param view
      */
     public void stopRecord(View view){
-        this.recorderInstance.setRecording(false);
+//        this.recorderInstance.setRecording(false);
 
         // 上传文件到服务器
         this.upload(this.FileName);
