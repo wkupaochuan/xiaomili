@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" value="app" />
+        <option name="GRADLE_PROJECT_PATH" value=":xiaomili" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
@@ -79,17 +79,30 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="pinyin4j-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="basehttplibrary" level="project" />
-    <orderEntry type="library" exported="" name="Baidu-SpeechRecognitionUI-SDK-Android-1.6.0" level="project" />
+    <orderEntry type="library" exported="" name="pinyin4j-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="smack-tcp-4.0.6" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="qiniu-android-sdk-7.0.1" level="project" />
+    <orderEntry type="library" exported="" name="asmack-android-8-4.0.6" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
-    <orderEntry type="library" exported="" name="galaxy" level="project" />
+    <orderEntry type="library" exported="" name="fastjson-1.1.45.android" level="project" />
+    <orderEntry type="library" exported="" name="roundedimageview-1.5.0" level="project" />
+    <orderEntry type="library" exported="" name="smack-core-compression-4.0.6" level="project" />
+    <orderEntry type="library" exported="" name="android-async-http-1.4.6" level="project" />
     <orderEntry type="library" exported="" name="VoiceRecognition-1.6.0" level="project" />
+    <orderEntry type="library" exported="" name="Baidu-SpeechRecognitionUI-SDK-Android-1.6.0" level="project" />
+    <orderEntry type="library" exported="" name="smack-core-4.0.6-sources" level="project" />
+    <orderEntry type="library" exported="" name="asmack-android-8-0.8.10" level="project" />
+    <orderEntry type="library" exported="" name="smack-core-4.0.6" level="project" />
+    <orderEntry type="library" exported="" name="smack-extensions-4.0.6" level="project" />
+    <orderEntry type="library" exported="" name="smack-bosh-4.0.6" level="project" />
+    <orderEntry type="library" exported="" name="smack-core-dns-4.0.6" level="project" />
+    <orderEntry type="library" exported="" name="qiniuyun-api-zhb" level="project" />
+    <orderEntry type="library" exported="" name="galaxy" level="project" />
   </component>
 </module>
 
