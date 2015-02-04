@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import com.ai.welcome.R;
 import com.alibaba.fastjson.JSON;
+import com.gauss.recorder.SpeexPlayer;
+import com.gauss.recorder.SpeexRecorder;
 
 import java.io.File;
 
@@ -18,7 +20,6 @@ import api.chat.UploadFile;
 import constants.ConstantsCommon;
 import model.chat.JsonMessage;
 import service.chat.ChatConnectManager;
-import tools.XMediaPlayer;
 
 
 public class ChatActivity extends BaseActivity{
@@ -30,18 +31,13 @@ public class ChatActivity extends BaseActivity{
     //语音文件保存路径
     private String FileName = null;
 
-//    SpeexRecorder recorderInstance = null;
+    SpeexRecorder recorderInstance = null;
 
 
     /**
-     * 测试jni
+     * 初始化
+     * @param savedInstanceState
      */
-    static {
-        System.loadLibrary("JniTest");
-    }
-
-    public native String getStringFromNative();
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_test);
@@ -55,10 +51,14 @@ public class ChatActivity extends BaseActivity{
         FileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         FileName += "/audiorecordtest.spx";
 
-//        this.recorderInstance = new SpeexRecorder(FileName);
+        this.recorderInstance = new SpeexRecorder(FileName);
     }
 
 
+    /**
+     * 发送消息
+     * @param view
+     */
     public void sendMessage(View view)
     {
         String msg = this.tvMsg.getText().toString();
@@ -70,6 +70,7 @@ public class ChatActivity extends BaseActivity{
 
     /**
      * 发送多媒体消息
+     * 1--暂时给test1用户发消息
      * @param filePath
      */
     public void sendMediaMessage(String filePath)
@@ -88,9 +89,9 @@ public class ChatActivity extends BaseActivity{
      */
     public void startRecord(View view)
     {
-//        Thread th = new Thread(recorderInstance);
-//        th.start();
-//        this.recorderInstance.setRecording(true);
+        Thread th = new Thread(recorderInstance);
+        th.start();
+        this.recorderInstance.setRecording(true);
     }
 
 
@@ -99,7 +100,7 @@ public class ChatActivity extends BaseActivity{
      * @param view
      */
     public void stopRecord(View view){
-//        this.recorderInstance.setRecording(false);
+        this.recorderInstance.setRecording(false);
 
         // 上传文件到服务器
         this.upload(this.FileName);
@@ -189,7 +190,10 @@ public class ChatActivity extends BaseActivity{
             public void onSuccess(Object data) {
                 String filePath = (String) data;
                 Log.e(ConstantsCommon.LOG_TAG, "下载结束:播放:" + filePath);
-                XMediaPlayer.play(filePath);
+//                XMediaPlayer.play(filePath);
+                SpeexPlayer splayer;
+                splayer = new SpeexPlayer(filePath);
+                splayer.startPlay();
             }
 
             /**
