@@ -21,6 +21,7 @@ import api.chat.UploadFile;
 import constants.ConstantsCommon;
 import model.chat.JsonMessage;
 import service.chat.ChatConnectManager;
+import tools.media_record.MediaRecordFunc;
 
 
 /**
@@ -53,7 +54,7 @@ public class ChatActivity extends BaseActivity{
 
         //设置sdcard的路径
         FileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        FileName += "/audiorecordtest.spx";
+        FileName += "/audiorecordtest.speex";
 
         this.recorderInstance = new SpeexRecorder(FileName);
     }
@@ -78,8 +79,6 @@ public class ChatActivity extends BaseActivity{
 
             }
         });
-
-
 
     }
 
@@ -107,9 +106,12 @@ public class ChatActivity extends BaseActivity{
      */
     public void startRecordOnClick(View view)
     {
-        Thread th = new Thread(recorderInstance);
-        th.start();
-        this.recorderInstance.setRecording(true);
+//        Thread th = new Thread(recorderInstance);
+//        th.start();
+//        this.recorderInstance.setRecording(true);
+
+        // 开始录音
+        MediaRecordFunc.getInstance().startRecord();
     }
 
 
@@ -118,10 +120,20 @@ public class ChatActivity extends BaseActivity{
      * @param view
      */
     public void stopRecordOnClick(View view){
-        this.recorderInstance.setRecording(false);
+//        this.recorderInstance.setRecording(false);
+//        this.upload(this.FileName);
 
-        // 上传文件到服务器
-        this.upload(this.FileName);
+        String filePath = MediaRecordFunc.getInstance().stopRecord();
+
+        File testFile = new File(filePath);
+        if(testFile.exists())
+        {
+            Log.e(ConstantsCommon.LOG_TAG, "文件存在, 大小:" + testFile.length());
+            // 上传文件到服务器
+            this.upload(filePath);
+        }
+
+
     }
 
 

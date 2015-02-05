@@ -50,7 +50,7 @@ public class RestClient {
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)
     {
         params.add("toy_unique_id", Welcome.deviceId);
-        Log.e(ConstantsCommon.LOG_TAG, getAbsoluteUrl(url));
+        Log.e(ConstantsCommon.LOG_TAG, "发送请求:" + getAbsoluteUrl(url));
         RestClient.client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 

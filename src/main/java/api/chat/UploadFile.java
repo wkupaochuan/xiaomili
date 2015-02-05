@@ -29,7 +29,7 @@ public class UploadFile {
      */
     public static void uploadFile(String filePath, final ClientCallBack callback) {
 
-        Log.e(ConstantsCommon.LOG_TAG, "wechat开始上传文件");
+        Log.e(ConstantsCommon.LOG_TAG, "wechat开始上传文件:" + filePath);
         // 构造参数
         RequestParams params = new RequestParams();
         try {
