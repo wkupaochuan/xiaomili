@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发送"
-        android:onClick="sendMessage"
+        android:onClick="sendMessageOnClick"
         />
 
     <Button
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="开始录音"
-        android:onClick="startRecord"
+        android:onClick="startRecordOnClick"
         />
 
     <Button
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="结束录音"
-        android:onClick="stopRecord"
+        android:onClick="stopRecordOnClick"
         />
 
 

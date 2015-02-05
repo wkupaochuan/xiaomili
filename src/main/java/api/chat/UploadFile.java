@@ -1,6 +1,8 @@
 package api.chat;
 
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -12,6 +14,7 @@ import java.io.FileNotFoundException;
 import api.ClientCallBack;
 import api.RestClient;
 import constants.ApiURL;
+import constants.ConstantsCommon;
 
 /**
  * 上传文件
@@ -26,6 +29,7 @@ public class UploadFile {
      */
     public static void uploadFile(String filePath, final ClientCallBack callback) {
 
+        Log.e(ConstantsCommon.LOG_TAG, "wechat开始上传文件");
         // 构造参数
         RequestParams params = new RequestParams();
         try {

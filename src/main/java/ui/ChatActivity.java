@@ -16,12 +16,16 @@ import java.io.File;
 
 import api.ClientCallBack;
 import api.chat.DownLoadFileTask;
+import api.chat.SendMsg;
 import api.chat.UploadFile;
 import constants.ConstantsCommon;
 import model.chat.JsonMessage;
 import service.chat.ChatConnectManager;
 
 
+/**
+ * 亲子互动模块
+ */
 public class ChatActivity extends BaseActivity{
 
     private EditText tvMsg;
@@ -56,14 +60,27 @@ public class ChatActivity extends BaseActivity{
 
 
     /**
-     * 发送消息
+     * 发送文字消息点击事件
      * @param view
      */
-    public void sendMessage(View view)
+    public void sendMessageOnClick(View view)
     {
         String msg = this.tvMsg.getText().toString();
+        SendMsg.sendTextMsg(Welcome.deviceId, msg, new ClientCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                Log.e(ConstantsCommon.LOG_TAG, "device_id:" + Welcome.deviceId);
+                Log.e(ConstantsCommon.LOG_TAG, "发送文字消息成功:" + data.toString());
+            }
 
-        ChatConnectManager.sendMessage(msg, "test1@iz255gm1qk6z/Spark 2.6.3");
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
+
+
     }
 
 
@@ -83,11 +100,12 @@ public class ChatActivity extends BaseActivity{
         ChatConnectManager.sendMessage(msgContent, "test1@iz255gm1qk6z/Spark 2.6.3");
     }
 
+
     /**
-     * 开始录音
+     * 开始录音点击事件
      * @param view
      */
-    public void startRecord(View view)
+    public void startRecordOnClick(View view)
     {
         Thread th = new Thread(recorderInstance);
         th.start();
@@ -99,46 +117,12 @@ public class ChatActivity extends BaseActivity{
      * 结束录音
      * @param view
      */
-    public void stopRecord(View view){
+    public void stopRecordOnClick(View view){
         this.recorderInstance.setRecording(false);
 
         // 上传文件到服务器
         this.upload(this.FileName);
     }
-
-
-//    /**
-//     * 开始录音
-//     * @param view
-//     */
-//    public void startRecord(View view)
-//    {
-//        mRecorder = new MediaRecorder();
-//        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//        mRecorder.setOutputFile(FileName);
-//        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//        try {
-//            mRecorder.prepare();
-//        } catch (IOException e) {
-//        }
-//        mRecorder.start();
-//    }
-//
-//
-//    /**
-//     * 结束录音
-//     * @param view
-//     */
-//    public void stopRecord(View view){
-//        mRecorder.stop();
-//        mRecorder.release();
-//        mRecorder = null;
-//
-//        // 上传文件到服务器
-//        this.upload(this.FileName);
-//    }
-
 
 
     /**
@@ -154,9 +138,11 @@ public class ChatActivity extends BaseActivity{
                 // 获取上传后的路径
                 String fileUrl = (String) data;
 
-                Log.e(ConstantsCommon.LOG_TAG, "文件路径" + fileUrl);
+                Log.e(ConstantsCommon.LOG_TAG, "wechat成功上传文件" + fileUrl);
 
-                ChatActivity.this.sendMediaMessage(fileUrl);
+//                ChatActivity.this.sendMediaMessage(fileUrl);
+
+                sendVoiceMsg(fileUrl);
             }
 
             // 请求失败
@@ -166,6 +152,27 @@ public class ChatActivity extends BaseActivity{
 
         });
 
+    }
+
+
+    /**
+     * 发送语音消息
+     * @param filePath
+     */
+    private void sendVoiceMsg(String filePath)
+    {
+        SendMsg.sendVoiceMsg(Welcome.deviceId, filePath, new ClientCallBack() {
+            @Override
+            public void onSuccess(Object data) {
+                Log.e(ConstantsCommon.LOG_TAG, "device_id:" + Welcome.deviceId);
+                Log.e(ConstantsCommon.LOG_TAG, "发送语音消息成功:" + data.toString());
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
     }
 
 
@@ -210,6 +217,11 @@ public class ChatActivity extends BaseActivity{
     }
 
 
+    /**
+     * 获取路径
+     * @param fileUrl
+     * @return
+     */
     private static String getDownloadFilePath(String fileUrl)
     {
         String fileName = fileUrl.substring(fileUrl.indexOf("/") + 1);
