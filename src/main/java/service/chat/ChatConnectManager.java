@@ -1,6 +1,6 @@
 package service.chat;
 
-import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
 import org.jivesoftware.smack.AccountManager;
@@ -20,7 +20,6 @@ public class ChatConnectManager {
     public static ConnectionConfiguration connConfig;
     public static XMPPConnection xmppConnection;
     public static ChatManager chatManager;
-    public static Activity activity;
     public static String UserId;
     public static String User;
     public static Chat chat ;
@@ -29,13 +28,16 @@ public class ChatConnectManager {
     public static int serverPort = 5222;
     public static String password = "ijnUHB";
 
+    private static ChatActivity activity;
+
 
     /**
      * 登陆
      * @param Username
      */
-    public static void login (final String Username)
+    public static void login (final String Username, ChatActivity activity)
     {
+        ChatConnectManager.activity = activity;
         connConfig = new ConnectionConfiguration(ChatConnectManager.serverIP, ChatConnectManager.serverPort);
 
         // 关闭安全模式，必须
@@ -82,7 +84,7 @@ public class ChatConnectManager {
                     accountManager.createAccount(userName, ChatConnectManager.password);
 
                     // 注册完毕，自动登录
-                    ChatConnectManager.login(userName);
+                    ChatConnectManager.login(userName, ChatConnectManager.activity);
                 }
                 catch (Exception ex) {
                     Log.e(ConstantsCommon.LOG_TAG, ex.getMessage());
@@ -112,9 +114,9 @@ public class ChatConnectManager {
                      * @param message
                      */
                     public void processMessage(Chat arg0, Message message) {
-                        ChatConnectManager.sendMessage("我在app", message.getFrom());
+//                        ChatConnectManager.sendMessage("我在app", message.getFrom());
 
-                        ChatActivity.playMsg(message.getBody());
+                        new NewMsgThread(ChatConnectManager.activity, message.getBody()).start();
                     }
 
                 });
@@ -144,6 +146,35 @@ public class ChatConnectManager {
             }
         }.start();
     }
+
+
+
+    static class NewMsgThread extends Thread{
+
+        ChatActivity activity;//主控制类的引用
+        String msgBody;
+
+        public NewMsgThread(ChatActivity activity, String msgBody)//构造方法
+        {
+            this.activity=activity;
+            this.msgBody = msgBody;
+        }
+
+        public void run() {
+            try {
+                Bundle b = new Bundle();
+                b.putString("msg_body", this.msgBody);
+                android.os.Message msg = new android.os.Message();
+                msg.setData(b);
+                msg.what = 0;
+                this.activity.newMsgHandler.sendMessage(msg);
+            } catch (Exception e) {
+                Log.e(ConstantsCommon.LOG_TAG, e.getMessage());
+            }
+        }
+    }
+
+
 
 
 

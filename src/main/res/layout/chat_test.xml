@@ -33,5 +33,24 @@
         android:onClick="stopRecordOnClick"
         />
 
+    <TextView
+        android:id="@+id/tv_new_msg_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        />
+
+
+    <Button
+        android:id="@+id/btn_play_voice_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="播放语音消息"
+        android:onClick="stopRecordOnClick"
+        />
+
+
+
+
 
 </LinearLayout>

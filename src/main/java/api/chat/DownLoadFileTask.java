@@ -1,6 +1,8 @@
 package api.chat;
 
 
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import api.ClientCallBack;
+import constants.ConstantsCommon;
 
 public class DownLoadFileTask extends Thread{
 
@@ -31,6 +34,7 @@ public class DownLoadFileTask extends Thread{
     public void run()
     {
         try {
+            Log.e(ConstantsCommon.LOG_TAG, "开始下载语音:地址--" + fileUrl + "; 本地址--" + filePath);
             URL url = new URL(this.fileUrl);
             URLConnection conn = url.openConnection();
             //防止返回-1
@@ -75,7 +79,7 @@ public class DownLoadFileTask extends Thread{
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            this.callBack.onFailure(e.getMessage());
         }
 
     }

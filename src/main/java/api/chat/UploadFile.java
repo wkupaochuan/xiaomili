@@ -7,6 +7,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +18,7 @@ import api.ClientCallBack;
 import api.RestClient;
 import constants.ApiURL;
 import constants.ConstantsCommon;
+import model.story.StoryItem;
 
 /**
  * 上传文件
@@ -62,4 +66,30 @@ public class UploadFile {
             }
         });
     }
+
+
+    private static String getFileName(String response)
+    {
+        String fileName = null;
+        try {
+            JSONArray jsonArrayRes = new JSONArray(response);
+
+            for (int i = 0; i < jsonArrayRes.length(); ++i) {
+                StoryItem storyItem = new StoryItem();
+
+                JSONObject obj = jsonArrayRes.getJSONObject(i);
+                storyItem.setTitle(obj.getString("name"));
+                String path = obj.getString("path");
+                String storyCover = obj.getString("story_cover_path");
+                storyItem.setLocation(path);
+                storyItem.setStoryCover(storyCover);
+
+            }
+
+        } catch (JSONException e) {
+        }
+
+        return fileName;
+    }
+
 }

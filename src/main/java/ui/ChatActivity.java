@@ -3,13 +3,16 @@ package ui;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ai.welcome.R;
 import com.alibaba.fastjson.JSON;
-import com.gauss.recorder.SpeexPlayer;
 import com.gauss.recorder.SpeexRecorder;
 
 import java.io.File;
@@ -21,6 +24,7 @@ import api.chat.UploadFile;
 import constants.ConstantsCommon;
 import model.chat.JsonMessage;
 import service.chat.ChatConnectManager;
+import tools.XMediaPlayer;
 import tools.media_record.MediaRecordFunc;
 
 
@@ -39,6 +43,12 @@ public class ChatActivity extends BaseActivity{
     SpeexRecorder recorderInstance = null;
 
 
+    private TextView tvNewMsgNotice;
+    private Button btnPlayVoiceMsg;
+
+    public Handler newMsgHandler;
+
+
     /**
      * 初始化
      * @param savedInstanceState
@@ -50,13 +60,25 @@ public class ChatActivity extends BaseActivity{
         this.tvMsg = (EditText)this.findViewById(R.id.tv_sms);
 
         // 使用deviceid登陆(如果用户不存在，注册后登陆)
-        ChatConnectManager.login(Welcome.deviceId);
+        ChatConnectManager.login(Welcome.deviceId, this);
 
         //设置sdcard的路径
         FileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         FileName += "/audiorecordtest.speex";
 
         this.recorderInstance = new SpeexRecorder(FileName);
+
+        this.tvNewMsgNotice = (TextView)this.findViewById(R.id.tv_new_msg_notice);
+        this.btnPlayVoiceMsg = (Button)this.findViewById(R.id.btn_play_voice_msg);
+
+        // 新消息更新handler
+        this.newMsgHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                Bundle b = msg.getData();
+                String msgBody = b.getString("msg_body");
+                ChatActivity.this.showMsg(msgBody);
+            }
+        };
     }
 
 
@@ -106,9 +128,6 @@ public class ChatActivity extends BaseActivity{
      */
     public void startRecordOnClick(View view)
     {
-//        Thread th = new Thread(recorderInstance);
-//        th.start();
-//        this.recorderInstance.setRecording(true);
 
         // 开始录音
         MediaRecordFunc.getInstance().startRecord();
@@ -120,8 +139,6 @@ public class ChatActivity extends BaseActivity{
      * @param view
      */
     public void stopRecordOnClick(View view){
-//        this.recorderInstance.setRecording(false);
-//        this.upload(this.FileName);
 
         String filePath = MediaRecordFunc.getInstance().stopRecord();
 
@@ -150,7 +167,7 @@ public class ChatActivity extends BaseActivity{
                 // 获取上传后的路径
                 String fileUrl = (String) data;
 
-                Log.e(ConstantsCommon.LOG_TAG, "wechat成功上传文件" + fileUrl);
+                Log.e(ConstantsCommon.LOG_TAG, "wechat成功上传文件:" + fileUrl);
 
 //                ChatActivity.this.sendMediaMessage(fileUrl);
 
@@ -188,17 +205,18 @@ public class ChatActivity extends BaseActivity{
     }
 
 
-
     /**
-     * 播放消息
-     * @param strMsg
+     * 播放语音消息
+     * @param mediaUrl
      */
-    public static void playMsg(String strMsg)
+    private void playVoiceMsg(String mediaUrl)
     {
-        Log.e(ConstantsCommon.LOG_TAG, "接收到消息:" + strMsg);
-        JsonMessage jMsg = JsonMessage.parse(strMsg);
-        String fileUrl = "http://toy-api.wkupaochuan.com/" + jMsg.file;
-        String filePath = ChatActivity.getDownloadFilePath(jMsg.file);
+        Log.e(ConstantsCommon.LOG_TAG, "语音消息:" + mediaUrl);
+        // 展示语音播放键
+        this.btnPlayVoiceMsg.setVisibility(View.VISIBLE);
+
+        // 获取本地存储路径
+        String filePath = ChatActivity.getDownloadFilePath(mediaUrl);
 
         // 下载结束的回到方法
         ClientCallBack callBack = new ClientCallBack() {
@@ -209,23 +227,53 @@ public class ChatActivity extends BaseActivity{
             public void onSuccess(Object data) {
                 String filePath = (String) data;
                 Log.e(ConstantsCommon.LOG_TAG, "下载结束:播放:" + filePath);
-//                XMediaPlayer.play(filePath);
-                SpeexPlayer splayer;
-                splayer = new SpeexPlayer(filePath);
-                splayer.startPlay();
+                XMediaPlayer.play(filePath);
             }
 
             /**
-             * 下载结束
+             * 下载失败
              * @param message
              */
             public void onFailure(String message) {
-
+                Log.e(ConstantsCommon.LOG_TAG, "下载失败:" + message);
             }
         };
 
         // 下载结束之后，调用回调方法
-        new DownLoadFileTask(fileUrl, filePath, callBack).start();
+        new DownLoadFileTask(mediaUrl, filePath, callBack).start();
+    }
+
+
+    /**
+     * 展示文字消息内容
+     * @param msgContent
+     */
+    private void showTextMsg(String msgContent)
+    {
+        Log.e(ConstantsCommon.LOG_TAG, "文字消息:" + msgContent);
+        // 隐藏语音消息播放键
+        this.btnPlayVoiceMsg.setVisibility(View.INVISIBLE);
+        // 展示消息
+        this.tvNewMsgNotice.setText(msgContent);
+    }
+
+
+    /**
+     * 播放消息
+     * @param strMsg
+     */
+    private void showMsg(String strMsg)
+    {
+        Log.e(ConstantsCommon.LOG_TAG, "接收到消息:" + strMsg);
+        JsonMessage jMsg = JsonMessage.parse(strMsg);
+        if(jMsg.messageType.equals("text"))
+        {
+            showTextMsg(jMsg.text);
+        }
+        else if (jMsg.messageType.equals("voice"))
+        {
+            playVoiceMsg(jMsg.file);
+        }
     }
 
 
@@ -236,7 +284,7 @@ public class ChatActivity extends BaseActivity{
      */
     private static String getDownloadFilePath(String fileUrl)
     {
-        String fileName = fileUrl.substring(fileUrl.indexOf("/") + 1);
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
 
         String dowloadDir = Environment.getExternalStorageDirectory()
                 + "/download/";
