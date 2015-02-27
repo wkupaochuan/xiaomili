@@ -1,6 +1,5 @@
 package ui;
 
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -16,6 +15,8 @@ import com.alibaba.fastjson.JSON;
 import com.gauss.recorder.SpeexRecorder;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import api.ClientCallBack;
 import api.chat.DownLoadFileTask;
@@ -35,15 +36,17 @@ public class ChatActivity extends BaseActivity{
 
     private EditText tvMsg;
 
-    private MediaRecorder mRecorder = null;
 
     //语音文件保存路径
     private String FileName = null;
+
+    private String newVoiceMsgFilePath;
 
     SpeexRecorder recorderInstance = null;
 
 
     private TextView tvNewMsgNotice;
+    private TextView tvTextMsg;
     private Button btnPlayVoiceMsg;
 
     public Handler newMsgHandler;
@@ -69,6 +72,7 @@ public class ChatActivity extends BaseActivity{
         this.recorderInstance = new SpeexRecorder(FileName);
 
         this.tvNewMsgNotice = (TextView)this.findViewById(R.id.tv_new_msg_notice);
+        this.tvTextMsg = (TextView)this.findViewById(R.id.tv_text_msg);
         this.btnPlayVoiceMsg = (Button)this.findViewById(R.id.btn_play_voice_msg);
 
         // 新消息更新handler
@@ -128,7 +132,6 @@ public class ChatActivity extends BaseActivity{
      */
     public void startRecordOnClick(View view)
     {
-
         // 开始录音
         MediaRecordFunc.getInstance().startRecord();
     }
@@ -212,11 +215,12 @@ public class ChatActivity extends BaseActivity{
     private void playVoiceMsg(String mediaUrl)
     {
         Log.e(ConstantsCommon.LOG_TAG, "语音消息:" + mediaUrl);
-        // 展示语音播放键
-        this.btnPlayVoiceMsg.setVisibility(View.VISIBLE);
 
         // 获取本地存储路径
-        String filePath = ChatActivity.getDownloadFilePath(mediaUrl);
+        this.newVoiceMsgFilePath = ChatActivity.getDownloadFilePath(mediaUrl);
+
+        // 下载结束展示语音播放键
+        this.btnPlayVoiceMsg.setVisibility(View.VISIBLE);
 
         // 下载结束的回到方法
         ClientCallBack callBack = new ClientCallBack() {
@@ -227,7 +231,6 @@ public class ChatActivity extends BaseActivity{
             public void onSuccess(Object data) {
                 String filePath = (String) data;
                 Log.e(ConstantsCommon.LOG_TAG, "下载结束:播放:" + filePath);
-                XMediaPlayer.play(filePath);
             }
 
             /**
@@ -240,7 +243,21 @@ public class ChatActivity extends BaseActivity{
         };
 
         // 下载结束之后，调用回调方法
-        new DownLoadFileTask(mediaUrl, filePath, callBack).start();
+        new DownLoadFileTask(mediaUrl, this.newVoiceMsgFilePath, callBack).start();
+    }
+
+
+    /**
+     * 播放新语音消息点击事件
+     * @param view
+     */
+    public void playNewVoiceMsg(View view)
+    {
+        // 播放新语音消息
+        XMediaPlayer.play(this.newVoiceMsgFilePath);
+
+        // 隐藏播放键
+        ChatActivity.this.btnPlayVoiceMsg.setVisibility(View.INVISIBLE);
     }
 
 
@@ -254,7 +271,7 @@ public class ChatActivity extends BaseActivity{
         // 隐藏语音消息播放键
         this.btnPlayVoiceMsg.setVisibility(View.INVISIBLE);
         // 展示消息
-        this.tvNewMsgNotice.setText(msgContent);
+        this.tvTextMsg.setText(msgContent);
     }
 
 
@@ -264,6 +281,8 @@ public class ChatActivity extends BaseActivity{
      */
     private void showMsg(String strMsg)
     {
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
+        this.tvNewMsgNotice.setText("新消息到达:" + df.format(new Date()).toString());
         Log.e(ConstantsCommon.LOG_TAG, "接收到消息:" + strMsg);
         JsonMessage jMsg = JsonMessage.parse(strMsg);
         if(jMsg.messageType.equals("text"))
