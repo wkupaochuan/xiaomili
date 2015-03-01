@@ -48,6 +48,7 @@ public class ChatActivity extends BaseActivity{
     private TextView tvNewMsgNotice;
     private TextView tvTextMsg;
     private Button btnPlayVoiceMsg;
+    private TextView tvUniqueId;
 
     public Handler newMsgHandler;
 
@@ -73,7 +74,11 @@ public class ChatActivity extends BaseActivity{
 
         this.tvNewMsgNotice = (TextView)this.findViewById(R.id.tv_new_msg_notice);
         this.tvTextMsg = (TextView)this.findViewById(R.id.tv_text_msg);
+        this.tvUniqueId = (TextView)this.findViewById(R.id.tv_unique_id);
         this.btnPlayVoiceMsg = (Button)this.findViewById(R.id.btn_play_voice_msg);
+
+        // 设置unique_id
+        this.tvUniqueId.setText("请在微信回复:gz:" + Welcome.deviceId + ", 绑定好友关系");
 
         // 新消息更新handler
         this.newMsgHandler = new Handler() {
